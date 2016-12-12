@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>waf透明网桥实现方式总结 | Birdsman&#39;s Destination</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Peking University" />
+  
+  
+  
+  
+  <meta name="description" content="透明网桥的部署模式是WAF部署模式中必不可少的一个，本文以WAF的路由模式的构建为基础构建，实现了WAF网桥模式的部署，对此进行了总结。主要包括了网桥的建立和ebtables的配置两个部分。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WAF透明网桥实现方式总结">
+<meta property="og:url" content="http://birdsman.top/2016/05/22/wafbridge/index.html">
+<meta property="og:site_name" content="Birdsman's Destination">
+<meta property="og:description" content="透明网桥的部署模式是WAF部署模式中必不可少的一个，本文以WAF的路由模式的构建为基础构建，实现了WAF网桥模式的部署，对此进行了总结。主要包括了网桥的建立和ebtables的配置两个部分。">
+<meta property="og:image" content="http://assets.tianmaying.com/md-image/8a1b4097f43c92f0c054dfbc1faf348b.png">
+<meta property="og:image" content="http://assets.tianmaying.com/md-image/a5fdb6ad45898fc17dd8b29ba9716e93.png">
+<meta property="og:updated_time" content="2016-06-27T13:45:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WAF透明网桥实现方式总结">
+<meta name="twitter:description" content="透明网桥的部署模式是WAF部署模式中必不可少的一个，本文以WAF的路由模式的构建为基础构建，实现了WAF网桥模式的部署，对此进行了总结。主要包括了网桥的建立和ebtables的配置两个部分。">
+<meta name="twitter:image" content="http://assets.tianmaying.com/md-image/8a1b4097f43c92f0c054dfbc1faf348b.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Birdsman&#39;s Destination" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/hiero.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+<body>
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            <a href="http://demo.athemes.com/hiero/" title="Hiero" rel="home">
+              Birdsman&#39;s Destination</a>
+          </h1>
+          <div class="site-description">There is a long way to go</div>
+
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">Categories</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-wafbridge" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      WAF透明网桥实现方式总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2016/05/22/wafbridge/" class="article-date">
+	  <time datetime="2016-05-22T08:06:30.000Z" itemprop="datePublished">May 22, 2016</time>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>透明网桥的部署模式是WAF部署模式中必不可少的一个，本文以<a href="http://www.tianmaying.com/tutorial/WAFROUTE" target="_blank" rel="external">WAF的路由模式</a>的构建为基础构建，实现了WAF网桥模式的部署，对此进行了总结。主要包括了网桥的建立和ebtables的配置两个部分。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1.背景"></a>1.背景</h1><hr>
+<p>想要实现网桥模式的部署主要包括了两个部分，网桥功能的实现和WAF实现网桥模式的部署。部署图如下所示：</p>
+<p><img src="http://assets.tianmaying.com/md-image/8a1b4097f43c92f0c054dfbc1faf348b.png" width="960" height="511"></p>
+<p>具体的配置为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">网桥由WAF的eh1和eth2两个接口组成，ip:192.168.2.10，每个端口不再配置ip，无需开启STP协议</div><div class="line">客户端IP:192.168.2.20</div><div class="line">Web Server的IP:192.168.2.11</div></pre></td></tr></table></figure>
+<h1 id="2-具体实现"><a href="#2-具体实现" class="headerlink" title="2.具体实现"></a>2.具体实现</h1><hr>
+<h2 id="网桥的建立"><a href="#网桥的建立" class="headerlink" title="网桥的建立"></a>网桥的建立</h2><p>建立网桥需要利用brctl命令，具体的代码为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">brctl addbr br0</div><div class="line">brctl stp br0 off     #不用开启生成树协议</div><div class="line">brctl addif br0 eth1  #将接口添加进网桥</div><div class="line">brctl addif br0 eth2</div><div class="line">ifconfig eth1 down    #去掉原有端口配置的IP地址</div><div class="line">ifconfig eth2 down</div><div class="line">ifconfig eth1 0.0.0.0 up</div><div class="line">ifconfig eth2 0.0.0.0 up</div></pre></td></tr></table></figure>
+<p>如上的命令就建立好了一个网桥，并且将eth1、eth2两个接口添加进网桥，现在这个网桥是没有IP而且没有启用的，那么现在就可以网桥配置IP地址并启用这个网桥。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ifconfig br0 10.0.2.10 up</div></pre></td></tr></table></figure>
+<h2 id="ebtables"><a href="#ebtables" class="headerlink" title="ebtables"></a>ebtables</h2><blockquote>
+<p>The <a href="http://ebtables.netfilter.org" target="_blank" rel="external">ebtables</a> program is a filtering tool for a Linux-based bridging firewall. It enables transparent filtering of network traffic passing through a Linux bridge. The filtering possibilities are limited to link layer filtering and somebasic filtering on higher network layers. Advanced logging, MAC DNAT/SNAT and brouter facilities are also included.</p>
+</blockquote>
+<p>简单来说，ebtables和iptables类似，都是Linux系统下网络数据包过滤的配置工具。既然称之为配置工具，就是说过滤功能是由内核底层提供支持的，这两个工具只是负责制定过滤的rules.</p>
+<p>ebtables的配置分为表、链和规则三级。</p>
+<ol>
+<li>表是内置且固定的，共有三种: filter, nat, broute，用-t选项指定。最常用的就是filter了，所以不设-t时默认就是这个表。nat用于地址转换，broute用于以太网桥。</li>
+<li>链有内置和自定义两种 。不同的表内置的链不同，这个从数据包的流程图中就可以看出来。所谓自定义的链也是挂接在对应的内置链内的，使用-j让其跳转到新的链中。数据包从进入到离开系统，要经过PreRoute，Input，Forward，Output，PostRoute这五个阶段。每个阶段中包括了一些节点，每个节点就是一个过滤时机。当数据包行进到某个节点时，系统就是检测对应节点的过滤规则并进行过滤，对于每个阶段，ebtables的过滤时机都比iptables要早。对于broute表来说，还有一个内置的Brouting链，它可以最先的接收到通过网桥的数据包并进行决策。</li>
+<li>每个链中有一系列规则，每个规则定义了一些过滤选项。每个数据包都会匹配这些项，一但匹配成功就会执行对应的动作。</li>
+</ol>
+<p>所谓动作，就是过滤的行为了。有四种，ACCEPT，DROP，RETURN和CONTINUE。常用的就是ACCEPT和DROP。</p>
+<p>Ebtables使用规则如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">ebtables [-t table] -[ADI] chain rule-specification [match-extensions] [watcher-extensions]</div><div class="line">-t table :一般为FORWARD链。</div><div class="line">－ADI：A添加到现有链的末尾；D删除规则链（必须指明规则链号）；I插入新的规则链（必须指明规则链号）。</div><div class="line">-P:规则表的默认规则的设置。可以DROP,ACCEPT,RETURN。</div><div class="line">-F:对所有的规则表的规则链清空。</div><div class="line">-L:指明规则表。可加参数，--Lc,--Ln</div><div class="line">-p:指明使用的协议类型，ipv4,arp等可选（使用时必选）详情见/etc/ethertypes</div><div class="line">--ip-proto:IP包的类型，1为ICMP包，6为TCP包，17为UDP包，在/etc/protocols下有详细说明</div><div class="line">--ip-src:IP包的源地址</div><div class="line">--ip-dst:IP包的目的地址</div><div class="line">--ip-sport:IP包的源端口</div><div class="line">--ip-dport:IP包的目的端口</div><div class="line">-i:指明从那片网卡进入</div><div class="line">-o:指明从那片网卡出去</div></pre></td></tr></table></figure>
+<p>Ebtables的处理流程如下图所示：</p>
+<p><img src="http://assets.tianmaying.com/md-image/a5fdb6ad45898fc17dd8b29ba9716e93.png" width="1100" height="360"></p>
+<p>Ebtables工作在链路层，在本次的配置过程中主要用到了它的broute表，它用于控制进来的数据包是需要进行bridge转发还是进行route转发，即2层转发和3层转发。broute表的brouting链最早的接收到传入网桥的数据包，它的ACCEPT动作会将数据包继续在网桥中传递，而DROP动作会将数据包传递到iptables中。如果数据包传递到了iptables中，就可以利用之前配置的路由模式进行后面的处理。</p>
+<p>另一点需要说明的是：如果一个以太网接口eth3，它并没有桥接到br0中，此时，从eth1进来的数据包不会走到ebtables中。它会在上图中的bridge check点，检查数据包进入的接口是否属于某个桥，如果是则走ebtables，否则直接走iptables。</p>
+<h2 id="实现的脚本"><a href="#实现的脚本" class="headerlink" title="实现的脚本"></a>实现的脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ebtables -t broute -A BROUTING -i eth2 -p ipv4 --ip-proto tcp --ip-dport 8086 -j redirect --redirect-target DROP</div><div class="line">ebtables -t broute -A BROUTING -i eth2 -p ipv4 --ip-proto tcp --ip-sport 8086 -j redirect --redirect-target DROP</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/Project/">Project</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BRIDGE/">BRIDGE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WAF/">WAF</a></li></ul>
+
+      
+        
+	<div id="comment">
+	
+	<!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="/2016/05/22/wafbridge/" data-title="WAF透明网桥实现方式总结" data-url="http://birdsman.top/2016/05/22/wafbridge/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"birdsman"};
+	  (function() {
+	    var ds = document.createElement('script');
+	    ds.type = 'text/javascript';ds.async = true;
+	    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	    ds.charset = 'UTF-8';
+	    (document.getElementsByTagName('head')[0] 
+	     || document.getElementsByTagName('body')[0]).appendChild(ds);
+	  })();
+	  </script>
+	<!-- 多说公共JS代码 end -->
+	
+	</div>
+	<link rel="stylesheet" href="/css/comment.css">
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/30/Libpcap/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Libpcap的使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/21/reverseproxy/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Apache反向代理的总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-背景"><span class="toc-number">1.</span> <span class="toc-text">1.背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-具体实现"><span class="toc-number">2.</span> <span class="toc-text">2.具体实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#网桥的建立"><span class="toc-number">2.1.</span> <span class="toc-text">网桥的建立</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ebtables"><span class="toc-number">2.2.</span> <span class="toc-text">ebtables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现的脚本"><span class="toc-number">2.3.</span> <span class="toc-text">实现的脚本</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2016 Birdsman&#39;s Destination All Rights Reserved.
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-77161859-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+</body>
+</html>
