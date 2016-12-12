@@ -19,11 +19,13 @@ Phase2:请求体阶段，这个阶段属于输入分析阶段，大部分的应�
 <meta property="og:site_name" content="Birdsman's Destination">
 <meta property="og:description" content="ModSecurity处理事件的5个阶段Phase1:请求头阶段，处于这个阶段的Modsecurity规则，会在Apache完成请求头后，立即被执行。到这个时候还没有读取到请求体，意即并不是所有的请求的参数都可以被使用。
 Phase2:请求体阶段，这个阶段属于输入分析阶段，大部分的应用规则也不会部署于这个阶段。这个阶段可以接收到来自于正常请求的一些参数。在请求体阶段，Modsecurity支持三种">
-<meta property="og:updated_time" content="2016-07-11T01:04:36.000Z">
+<meta property="og:image" content="http://7xsykk.com1.z0.glb.clouddn.com/mods1.png">
+<meta property="og:updated_time" content="2016-12-12T09:10:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Modsecurity 源代码分析">
 <meta name="twitter:description" content="ModSecurity处理事件的5个阶段Phase1:请求头阶段，处于这个阶段的Modsecurity规则，会在Apache完成请求头后，立即被执行。到这个时候还没有读取到请求体，意即并不是所有的请求的参数都可以被使用。
 Phase2:请求体阶段，这个阶段属于输入分析阶段，大部分的应用规则也不会部署于这个阶段。这个阶段可以接收到来自于正常请求的一些参数。在请求体阶段，Modsecurity支持三种">
+<meta name="twitter:image" content="http://7xsykk.com1.z0.glb.clouddn.com/mods1.png">
   
     <link rel="alternate" href="/atom.xml" title="Birdsman&#39;s Destination" type="application/atom+xml">
   
@@ -126,9 +128,9 @@ Phase2:请求体阶段，这个阶段属于输入分析阶段，大部分的应�
 <ul>
 <li>Application/x-www-form-urlencode</li>
 <li>Multipart/from-data</li>
-<li>Text/xml</li>
+<li>Text/xml<a id="more"></a>
+Phase3:响应头阶段，这个阶段发生在响应头被发送到客户端之前。在这个阶段，一些响应的状态码（如404）在请求的早起就被Apache服务器管理着，我们无法触发其预期的结果。</li>
 </ul>
-<p>Phase3:响应头阶段，这个阶段发生在响应头被发送到客户端之前。在这个阶段，一些响应的状态码（如404）在请求的早起就被Apache服务器管理着，我们无法触发其预期的结果。</p>
 <p>Phase4:响应体阶段，这个阶段可以运行规则截断响应体。</p>
 <p>Phase5:纪录阶段，在这个阶段的规则只能影响日志记录器如何执行，这个阶段可以检测Apache记录的错误信息，在这个阶段不能够拒绝或者阻断连接。因为在这个阶段来阻断用户的请求已经太晚了。</p>
 <p>第一个阶段进行了：Post-read-Request、URI Translation、Hearder Parsing、Access Control、Authentication和MIME Type Check等工作。<br>第二个阶段进行fixup。<br>第三四个阶段进行response响应。<br>第五个阶段进行纪录</p>
@@ -148,6 +150,13 @@ Phase2:请求体阶段，这个阶段属于输入分析阶段，大部分的应�
 </li>
 </ul>
 <p>4.规则的生效<br>在Apache处理请求的过程中，添加钩子函数，Modsecurity 的钩子函数中使用规则对请求进行处理。具体实现是在hook_request_early这个挂钩中。<br>过程：<br>变量决定数据–&gt;操作符决定匹配–&gt;动作决定去向<br>首先生成具体变量，其次根据操作符进行匹配，<br>若匹配成功，则完成相应动作。</p>
+<h2 id="重要函数分析"><a href="#重要函数分析" class="headerlink" title="重要函数分析"></a>重要函数分析</h2><p>1.SecRule指令中的实现函数cmd_rule，具体由add_rule实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">static const char *cmd_rule(cmd_parms *cmd, void *_dcfg,</div><div class="line">				const char *p1, const char *p2, const char *p3)</div><div class="line">&#123;</div><div class="line">    return add_rule(cmd, (directory_config *)_dcfg, RULE_TYPE_NORMAL, p1, p2, p3);</div><div class="line">        </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>add_rule之中，经历了以下步骤：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/* Create a ruleset if one does not exist. */</div><div class="line">    dcfg-&gt;ruleset = msre_ruleset_create(modsecurity-&gt;msre, cmd-&gt;pool);</div><div class="line"></div><div class="line">/* Create the rule now. */</div><div class="line">    rule = msre_rule_create(dcfg-&gt;ruleset, type, cmd-&gt;directive-&gt;filename,</div><div class="line">            cmd-&gt;directive-&gt;line_num, p1, p2, p3, &amp;my_error_msg); </div><div class="line"> 查找是否有相同ID的rules</div><div class="line"> /* Create default actionset if one does not already exist. */</div><div class="line">    dcfg-&gt;tmp_default_actionset = msre_actionset_create_default(modsecurity-&gt;msre);</div><div class="line"> /* Merge actions with the parent.*／</div><div class="line">   rule-&gt;actionset = msre_actionset_merge(modsecurity-&gt;msre, cmd-&gt;pool, dcfg-&gt;tmp_default_actionset,</div><div class="line">    rule-&gt;actionset, 1);</div><div class="line"> /*判断规则是否属于某个链*/</div><div class="line">    if (dcfg-&gt;tmp_chain_starter != NULL) &#123;</div><div class="line">    rule-&gt;chain_starter = dcfg-&gt;tmp_chain_starter;</div><div class="line">    rule-&gt;actionset-&gt;phase = rule-&gt;chain_starter-&gt;actionset-&gt;phase;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.具体的处理函数，5个阶段modsecurity_process_phase，在hook_request_early挂钩中，处理前三个阶段，在output_filter过滤器中处理后两个阶段。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">/* Do not process the same phase twice. */</div><div class="line">    if (msr-&gt;phase &gt;= phase) &#123;</div><div class="line">        if (msr-&gt;txcfg-&gt;debuglog_level &gt;= 4) &#123;</div><div class="line">            msr_log(msr, 4, &quot;Skipping phase %d because it was previously run (at %d now).&quot;,</div><div class="line">                phase, msr-&gt;phase);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return 0;</div><div class="line">    &#125;</div><div class="line">    msr-&gt;phase = phase;</div><div class="line"></div><div class="line">    /* Clear out the transformation cache at the start of each phase */</div><div class="line">    </div><div class="line">    switch(phase) &#123;</div><div class="line">        case 1 :</div><div class="line">            return modsecurity_process_phase_request_headers(msr);</div><div class="line">        case 2 :</div><div class="line">            return modsecurity_process_phase_request_body(msr);</div><div class="line">        case 3 :</div><div class="line">            return modsecurity_process_phase_response_headers(msr);</div><div class="line">        case 4 :</div><div class="line">            return modsecurity_process_phase_response_body(msr);</div><div class="line">        case 5 :</div><div class="line">            return modsecurity_process_phase_logging(msr);</div><div class="line">     &#125;</div></pre></td></tr></table></figure>
+<p>msre_ruleset_process_phase的具体处理过程如下：<br><img src="http://7xsykk.com1.z0.glb.clouddn.com/mods1.png"></p>
 
       
     </div>
@@ -192,11 +201,11 @@ Phase2:请求体阶段，这个阶段属于输入分析阶段，大部分的应�
     
 <nav id="article-nav">
   
-    <a href="/2016/07/08/ModSecurity2/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/07/08/LeetCode371/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          ModSecurity分析二
+          LeetCode 371 Sum of Two Integers
         
       </div>
     </a>
@@ -218,7 +227,7 @@ Phase2:请求体阶段，这个阶段属于输入分析阶段，大部分的应�
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ModSecurity处理事件的5个阶段"><span class="toc-number">1.</span> <span class="toc-text">ModSecurity处理事件的5个阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ModSecurity运行过程"><span class="toc-number">2.</span> <span class="toc-text">ModSecurity运行过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源代码分析"><span class="toc-number">3.</span> <span class="toc-text">源代码分析</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ModSecurity处理事件的5个阶段"><span class="toc-number">1.</span> <span class="toc-text">ModSecurity处理事件的5个阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ModSecurity运行过程"><span class="toc-number">2.</span> <span class="toc-text">ModSecurity运行过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源代码分析"><span class="toc-number">3.</span> <span class="toc-text">源代码分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重要函数分析"><span class="toc-number">4.</span> <span class="toc-text">重要函数分析</span></a></li></ol>
     
     </div>
   </aside>
