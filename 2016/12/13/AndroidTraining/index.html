@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="Birdsman's Destination">
 <meta property="og:description" content="开启Android学习的第一步，学习创建应用，了解Android的基本架构">
 <meta property="og:image" content="https://developer.android.com/images/viewgroup.png">
-<meta property="og:updated_time" content="2016-12-13T08:39:42.000Z">
+<meta property="og:updated_time" content="2016-12-13T08:40:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AndroidTraining">
 <meta name="twitter:description" content="开启Android学习的第一步，学习创建应用，了解Android的基本架构">
@@ -147,7 +147,7 @@
 </table>
 <p>build.gradle|Android Studio uses Gradle to compile and build your app. There is a build.gradle file for each module of your project, as well as a build.gradle file for the entire project. Usually, you’re only interested in the build.gradle file for the module. in this case the app or application module|</p>
 <h2 id="UI界面"><a href="#UI界面" class="headerlink" title="UI界面"></a>UI界面</h2><p>The graphical user interface for an Android app is built using a hierarchy of <strong>View</strong> and <strong>ViewGroup</strong> objects. View objects are usually UI widgets such as buttons or text fields. ViewGroup objects are invisible view containers that define how the child views are laid out, such as in a grid or a vertical list.<br>Android provides an XML vocabulary that corresponds to the subclasses of View and ViewGroup so you can define your UI in XML using a hierarchy of UI elements.Layouts are subclasses of the ViewGroup.<br><img src="https://developer.android.com/images/viewgroup.png" alt="" title="ViewGroup"><br><strong>LinearLayout</strong> is a view group (a subclass of ViewGroup) that lays out child views in either a vertical or horizontal orientation, as specified by the <em>android:orientation</em> attribute. Each child of a LinearLayout appears on the screen in the order in which it appears in the XML.<br>在设定控件宽度时，推荐使用的是 <strong>android:layout__weight</strong> 属性。The weight value is a number that specifies the amount of remaining space each view should consume, relative to the amount consumed by sibling views. This works kind of like the amount of ingredients in a drink recipe: “2 parts soda, 1 part syrup” means two-thirds of the drink is soda. For example, if you give one view a weight of 2 and another one a weight of 1, the sum is 3, so the first view fills 2/3 of the remaining space and the second view fills the rest. If you add a third view and give it a weight of 1, then the first view (with weight of 2) now gets 1/2 the remaining space, while the remaining two each get 1/4.<br>    <edittext android:id="@+id/edit_message" android:layout_weight="1" android:layout_width="0dp" android:layout_height="wrap_content" android:hint="@string/edit_message"><br>    <button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/button_send"></button></edittext></p>
-
+<h2 id="活动的启动"><a href="#活动的启动" class="headerlink" title="活动的启动"></a>活动的启动</h2>
       
     </div>
     <footer class="entry-meta entry-footer">
@@ -191,6 +191,15 @@
     
 <nav id="article-nav">
   
+    <a href="/2016/12/14/DynamicPrograming/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          DynamicPrograming
+        
+      </div>
+    </a>
+  
   
     <a href="/2016/07/09/LeetCode350/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
@@ -208,7 +217,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#开始学习"><span class="toc-number">1.</span> <span class="toc-text">开始学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#代码结构"><span class="toc-number">1.1.</span> <span class="toc-text">代码结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UI界面"><span class="toc-number">1.2.</span> <span class="toc-text">UI界面</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#开始学习"><span class="toc-number">1.</span> <span class="toc-text">开始学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#代码结构"><span class="toc-number">1.1.</span> <span class="toc-text">代码结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UI界面"><span class="toc-number">1.2.</span> <span class="toc-text">UI界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#活动的启动"><span class="toc-number">1.3.</span> <span class="toc-text">活动的启动</span></a></li></ol></li></ol>
     
     </div>
   </aside>
