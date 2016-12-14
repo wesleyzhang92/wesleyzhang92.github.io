@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>贪心算法 | Birdsman&#39;s Destination</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Peking University" />
+  
+  
+  
+  
+  <meta name="description" content="贪心算法
+基本概念：   所谓贪心算法是指，在对问题求解时，总是做出在当前看来是最好的选择。也就是说，不从整体最优上加以考虑，他所做出的仅是在某种意义上的局部最优解。   贪心算法没有固定的算法框架，算法设计的关键是贪心策略的选择。必须注意的是，贪心算法不是对所有问题都能得到整体最优解，选择的贪心策略必须具备无后效性，即某个状态以后的过程不会影响以前的状态，只与当前状态有关。    所以对所采用的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贪心算法">
+<meta property="og:url" content="http://birdsman.top/2016/12/14/GreedyAlgorithm/index.html">
+<meta property="og:site_name" content="Birdsman's Destination">
+<meta property="og:description" content="贪心算法
+基本概念：   所谓贪心算法是指，在对问题求解时，总是做出在当前看来是最好的选择。也就是说，不从整体最优上加以考虑，他所做出的仅是在某种意义上的局部最优解。   贪心算法没有固定的算法框架，算法设计的关键是贪心策略的选择。必须注意的是，贪心算法不是对所有问题都能得到整体最优解，选择的贪心策略必须具备无后效性，即某个状态以后的过程不会影响以前的状态，只与当前状态有关。    所以对所采用的">
+<meta property="og:updated_time" content="2016-12-14T02:32:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="贪心算法">
+<meta name="twitter:description" content="贪心算法
+基本概念：   所谓贪心算法是指，在对问题求解时，总是做出在当前看来是最好的选择。也就是说，不从整体最优上加以考虑，他所做出的仅是在某种意义上的局部最优解。   贪心算法没有固定的算法框架，算法设计的关键是贪心策略的选择。必须注意的是，贪心算法不是对所有问题都能得到整体最优解，选择的贪心策略必须具备无后效性，即某个状态以后的过程不会影响以前的状态，只与当前状态有关。    所以对所采用的">
+  
+    <link rel="alternate" href="/atom.xml" title="Birdsman&#39;s Destination" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/hiero.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+<body>
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            <a href="http://demo.athemes.com/hiero/" title="Hiero" rel="home">
+              Birdsman&#39;s Destination</a>
+          </h1>
+          <div class="site-description">There is a long way to go</div>
+
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">Categories</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-GreedyAlgorithm" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      贪心算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2016/12/14/GreedyAlgorithm/" class="article-date">
+	  <time datetime="2016-12-14T02:29:40.000Z" itemprop="datePublished">December 14, 2016</time>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>贪心算法</p>
+<h1 id="基本概念："><a href="#基本概念：" class="headerlink" title="基本概念："></a>基本概念：</h1><p>   所谓贪心算法是指，在对问题求解时，总是做出在当前看来是最好的选择。也就是说，不从整体最优上加以考虑，他所做出的仅是在某种意义上的局部最优解。<br>   贪心算法没有固定的算法框架，算法设计的关键是贪心策略的选择。必须注意的是，贪心算法不是对所有问题都能得到整体最优解，选择的贪心策略必须具备无后效性，即某个状态以后的过程不会影响以前的状态，只与当前状态有关。<br>    所以对所采用的贪心策略一定要仔细分析其是否满足无后效性。</p>
+<h1 id="贪心算法的基本思路："><a href="#贪心算法的基本思路：" class="headerlink" title="贪心算法的基本思路："></a>贪心算法的基本思路：</h1><pre><code>1.建立数学模型来描述问题。
+2.把求解的问题分成若干个子问题。
+3.对每一子问题求解，得到子问题的局部最优解。
+4.把子问题的解局部最优解合成原来解问题的一个解。
+</code></pre><h1 id="贪心算法适用的问题"><a href="#贪心算法适用的问题" class="headerlink" title="贪心算法适用的问题"></a>贪心算法适用的问题</h1><p>   贪心策略适用的前提是：局部最优策略能导致产生全局最优解。<br>   实际上，贪心算法适用的情况很少。一般，对一个问题分析是否适用于贪心算法，可以先选择该问题下的几个实际数据进行分析，就可做出判断。</p>
+<h1 id="贪心算法的实现框架"><a href="#贪心算法的实现框架" class="headerlink" title="贪心算法的实现框架"></a>贪心算法的实现框架</h1><pre><code>从问题的某一初始解出发；
+while （能朝给定总目标前进一步）
+{ 
+      利用可行的决策，求出可行解的一个解元素；
+}
+由所有解元素组合成问题的一个可行解；
+</code></pre><h1 id="贪心策略的选择"><a href="#贪心策略的选择" class="headerlink" title="贪心策略的选择"></a>贪心策略的选择</h1><p>   因为用贪心算法只能通过解局部最优解的策略来达到全局最优解，因此，一定要注意判断问题是否适合采用贪心算法策略，找到的解是否一定是问题的最优解。</p>
+<h1 id="例题分析"><a href="#例题分析" class="headerlink" title="例题分析"></a>例题分析</h1><p>  下面是一个可以试用贪心算法解的题目，贪心解的确不错，可惜不是最优解。<br>    [背包问题]有一个背包，背包容量是M=150。有7个物品，物品可以分割成任意大小。<br>    要求尽可能让装入背包中的物品总价值最大，但不能超过总容量。<br>    物品 A B C D E F G<br>    重量 35 30 60 50 40 10 25<br>    价值 10 40 30 50 35 40 30<br>    分析：<br>    目标函数： ∑pi最大<br>    约束条件是装入的物品总重量不超过背包容量：∑wi&lt;=M( M=150)<br>    （1）根据贪心的策略，每次挑选价值最大的物品装入背包，得到的结果是否最优？<br>    （2）每次挑选所占重量最小的物品装入是否能得到最优解？<br>    （3）每次选取单位重量价值最大的物品，成为解本题的策略。<br>    值得注意的是，贪心算法并不是完全不可以使用，贪心策略一旦经过证明成立后，它就是一种高效的算法。<br>    贪心算法还是很常见的算法之一，这是由于它简单易行，构造贪心策略不是很困难。<br>    可惜的是，它需要证明后才能真正运用到题目的算法中。<br>    一般来说，贪心算法的证明围绕着：整个问题的最优解一定由在贪心策略中存在的子问题的最优解得来的。<br>    对于例题中的3种贪心策略，都是无法成立（无法被证明）的，解释如下：<br>    （1）贪心策略：选取价值最大者。反例：<br>    W=30<br>    物品：A B C<br>    重量：28 12 12<br>    价值：30 20 20<br>    根据策略，首先选取物品A，接下来就无法再选取了，可是，选取B、C则更好。<br>    （2）贪心策略：选取重量最小。它的反例与第一种策略的反例差不多。<br>    （3）贪心策略：选取单位重量价值最大的物品。反例：<br>    W=30<br>    物品：A B C<br>    重量：28 20 10<br>    价值：28 20 10<br>    根据策略，三种物品单位重量价值一样，程序无法依据现有策略作出判断，如果选择A，则答案错误。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/Algorithm/">Algorithm</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ALGORITHM/">ALGORITHM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GREEDY/">GREEDY</a></li></ul>
+
+      
+        
+	<div id="comment">
+	
+	<!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="/2016/12/14/GreedyAlgorithm/" data-title="贪心算法" data-url="http://birdsman.top/2016/12/14/GreedyAlgorithm/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"birdsman"};
+	  (function() {
+	    var ds = document.createElement('script');
+	    ds.type = 'text/javascript';ds.async = true;
+	    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	    ds.charset = 'UTF-8';
+	    (document.getElementsByTagName('head')[0] 
+	     || document.getElementsByTagName('body')[0]).appendChild(ds);
+	  })();
+	  </script>
+	<!-- 多说公共JS代码 end -->
+	
+	</div>
+	<link rel="stylesheet" href="/css/comment.css">
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/14/DivideandConquer/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">分治算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概念："><span class="toc-number">1.</span> <span class="toc-text">基本概念：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#贪心算法的基本思路："><span class="toc-number">2.</span> <span class="toc-text">贪心算法的基本思路：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#贪心算法适用的问题"><span class="toc-number">3.</span> <span class="toc-text">贪心算法适用的问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#贪心算法的实现框架"><span class="toc-number">4.</span> <span class="toc-text">贪心算法的实现框架</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#贪心策略的选择"><span class="toc-number">5.</span> <span class="toc-text">贪心策略的选择</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#例题分析"><span class="toc-number">6.</span> <span class="toc-text">例题分析</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2016 Birdsman&#39;s Destination All Rights Reserved.
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-77161859-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+</body>
+</html>

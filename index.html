@@ -96,6 +96,65 @@
         
           <section id="main">
   
+    <article id="post-GreedyAlgorithm"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2016/12/14/GreedyAlgorithm/">贪心算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2016/12/14/GreedyAlgorithm/" class="article-date">
+	  <time datetime="2016-12-14T02:29:40.000Z" itemprop="datePublished">December 14, 2016</time>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>贪心算法</p>
+<h1 id="基本概念："><a href="#基本概念：" class="headerlink" title="基本概念："></a>基本概念：</h1><p>   所谓贪心算法是指，在对问题求解时，总是做出在当前看来是最好的选择。也就是说，不从整体最优上加以考虑，他所做出的仅是在某种意义上的局部最优解。<br>   贪心算法没有固定的算法框架，算法设计的关键是贪心策略的选择。必须注意的是，贪心算法不是对所有问题都能得到整体最优解，选择的贪心策略必须具备无后效性，即某个状态以后的过程不会影响以前的状态，只与当前状态有关。<br>    所以对所采用的贪心策略一定要仔细分析其是否满足无后效性。</p>
+<h1 id="贪心算法的基本思路："><a href="#贪心算法的基本思路：" class="headerlink" title="贪心算法的基本思路："></a>贪心算法的基本思路：</h1><pre><code>1.建立数学模型来描述问题。
+2.把求解的问题分成若干个子问题。
+3.对每一子问题求解，得到子问题的局部最优解。
+4.把子问题的解局部最优解合成原来解问题的一个解。
+</code></pre><h1 id="贪心算法适用的问题"><a href="#贪心算法适用的问题" class="headerlink" title="贪心算法适用的问题"></a>贪心算法适用的问题</h1><p>   贪心策略适用的前提是：局部最优策略能导致产生全局最优解。<br>   实际上，贪心算法适用的情况很少。一般，对一个问题分析是否适用于贪心算法，可以先选择该问题下的几个实际数据进行分析，就可做出判断。</p>
+<h1 id="贪心算法的实现框架"><a href="#贪心算法的实现框架" class="headerlink" title="贪心算法的实现框架"></a>贪心算法的实现框架</h1><pre><code>从问题的某一初始解出发；
+while （能朝给定总目标前进一步）
+{ 
+      利用可行的决策，求出可行解的一个解元素；
+}
+由所有解元素组合成问题的一个可行解；
+</code></pre><h1 id="贪心策略的选择"><a href="#贪心策略的选择" class="headerlink" title="贪心策略的选择"></a>贪心策略的选择</h1><p>   因为用贪心算法只能通过解局部最优解的策略来达到全局最优解，因此，一定要注意判断问题是否适合采用贪心算法策略，找到的解是否一定是问题的最优解。</p>
+<h1 id="例题分析"><a href="#例题分析" class="headerlink" title="例题分析"></a>例题分析</h1><p>  下面是一个可以试用贪心算法解的题目，贪心解的确不错，可惜不是最优解。<br>    [背包问题]有一个背包，背包容量是M=150。有7个物品，物品可以分割成任意大小。<br>    要求尽可能让装入背包中的物品总价值最大，但不能超过总容量。<br>    物品 A B C D E F G<br>    重量 35 30 60 50 40 10 25<br>    价值 10 40 30 50 35 40 30<br>    分析：<br>    目标函数： ∑pi最大<br>    约束条件是装入的物品总重量不超过背包容量：∑wi&lt;=M( M=150)<br>    （1）根据贪心的策略，每次挑选价值最大的物品装入背包，得到的结果是否最优？<br>    （2）每次挑选所占重量最小的物品装入是否能得到最优解？<br>    （3）每次选取单位重量价值最大的物品，成为解本题的策略。<br>    值得注意的是，贪心算法并不是完全不可以使用，贪心策略一旦经过证明成立后，它就是一种高效的算法。<br>    贪心算法还是很常见的算法之一，这是由于它简单易行，构造贪心策略不是很困难。<br>    可惜的是，它需要证明后才能真正运用到题目的算法中。<br>    一般来说，贪心算法的证明围绕着：整个问题的最优解一定由在贪心策略中存在的子问题的最优解得来的。<br>    对于例题中的3种贪心策略，都是无法成立（无法被证明）的，解释如下：<br>    （1）贪心策略：选取价值最大者。反例：<br>    W=30<br>    物品：A B C<br>    重量：28 12 12<br>    价值：30 20 20<br>    根据策略，首先选取物品A，接下来就无法再选取了，可是，选取B、C则更好。<br>    （2）贪心策略：选取重量最小。它的反例与第一种策略的反例差不多。<br>    （3）贪心策略：选取单位重量价值最大的物品。反例：<br>    W=30<br>    物品：A B C<br>    重量：28 20 10<br>    价值：28 20 10<br>    根据策略，三种物品单位重量价值一样，程序无法依据现有策略作出判断，如果选择A，则答案错误。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/Algorithm/">Algorithm</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ALGORITHM/">ALGORITHM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GREEDY/">GREEDY</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-DivideandConquer"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -124,10 +183,9 @@
           
             <div class="entry-summary" style="margin-left:0;">
             分治算法
-#基本概念
-   在计算机科学中，分治法是一种很重要的算法。字面上的解释是“分而治之”，就是把一个复杂的问题分成两个或更多的相同或相似的子问题，再把子问题分成更小的子问题……直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。这个技巧是很多高效算法的基础，如排序算法(快速排序，归并排序)，傅立叶变换(快速傅立叶变换)……
+基本概念   在计算机科学中，分治法是一种很重要的算法。字面上的解释是“分而治之”，就是把一个复杂的问题分成两个或更多的相同或相似的子问题，再把子问题分成更小的子问题……直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。这个技巧是很多高效算法的基础，如排序算法(快速排序，归并排序)，傅立叶变换(快速傅立叶变换)……
    任何一个可以用计算机求解的问题所需的计算时间都与其规模有关。问题的规模越小，越容易直接求解，解题所需的计算时间也越少。例如，对于n个元素的排序问题，当n=1时，不需任何计算。n=2时，只要作一次比较即可排好序。n=3时只要作3次比较即可，…。而当n较大时，问题就不那么容易处理了。要想直接解决一个规模较大的问题，有时是相当困难的。   
-#基...
+基本思想...
           
 
         
@@ -651,69 +709,6 @@ Apache 的反向代理配置Apache的反向代理配置需要加载mod_proxy模�
 <!-- Table of Contents -->
 
   
-    <article id="post-linux_network"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2016/05/20/linux_network/">Linux网络配置的命令总结</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2016/05/20/linux_network/" class="article-date">
-	  <time datetime="2016-05-20T08:06:30.000Z" itemprop="datePublished">May 20, 2016</time>
-	</a>
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-            <div class="entry-summary" style="margin-left:0;">
-            1.修改DNS
-DNS信息文件目录为 /etc/resolv.conf，不过需要注意，这只是自动生成的DNS的目录，不要手动去修改，否则重启后也会失效那么如何永久更改DNS的地址呢，有如下的两种方式：
-1.见下面的IP配置部分
-2.写入文件/etc/resolvconf/resolv.conf.d/base,格式为nameserver 8.8.8.8 每行一个
-
-2.添加、删除默认网关
-12route add deafult gw 192.168.1.1 eth0route del default gw 192.168.1.1
-3.添加、删除路由记录
-12route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0route del -net ...
-          
-
-        
-          <p class="article-more-link">
-            <a href="/2016/05/20/linux_network/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/Common/">Common</a>
-
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
 
 
   <nav id="page-nav">
@@ -815,6 +810,18 @@ DNS信息文件目录为 /etc/resolv.conf，不过需要注意，这只是自动
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2016/12/14/GreedyAlgorithm/">贪心算法</a></h6>
+              <span>December 14, 2016</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2016/12/14/DivideandConquer/">分治算法</a></h6>
               <span>December 14, 2016</span>
             </div>
@@ -869,18 +876,6 @@ DNS信息文件目录为 /etc/resolv.conf，不过需要注意，这只是自动
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2016/07/07/Modsecurity/">Modsecurity 源代码分析</a></h6>
-              <span>July 7, 2016</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -890,7 +885,7 @@ DNS信息文件目录为 /etc/resolv.conf，不过需要注意，这只是自动
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Common/">Common</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Easy/">LeetCode_Easy</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Medium/">LeetCode_Medium</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Project/">Project</a><span class="category-list-count">4</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Common/">Common</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Easy/">LeetCode_Easy</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Medium/">LeetCode_Medium</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Project/">Project</a><span class="category-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -900,7 +895,7 @@ DNS信息文件目录为 /etc/resolv.conf，不过需要注意，这只是自动
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ALGORITHM/">ALGORITHM</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ANDROID/">ANDROID</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APACHE/">APACHE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BRIDGE/">BRIDGE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DIVIDE-CONQUER/">DIVIDE&CONQUER</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DP/">DP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHMAP/">HASHMAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHSET/">HASHSET</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NETWORK/">NETWORK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WAF/">WAF</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ALGORITHM/">ALGORITHM</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ANDROID/">ANDROID</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APACHE/">APACHE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BRIDGE/">BRIDGE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DIVIDE-CONQUER/">DIVIDE&CONQUER</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DP/">DP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GREEDY/">GREEDY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHMAP/">HASHMAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHSET/">HASHSET</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NETWORK/">NETWORK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WAF/">WAF</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -910,7 +905,7 @@ DNS信息文件目录为 /etc/resolv.conf，不过需要注意，这只是自动
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ALGORITHM/" style="font-size: 15px;">ALGORITHM</a> <a href="/tags/ANDROID/" style="font-size: 10px;">ANDROID</a> <a href="/tags/APACHE/" style="font-size: 15px;">APACHE</a> <a href="/tags/BRIDGE/" style="font-size: 10px;">BRIDGE</a> <a href="/tags/DIVIDE-CONQUER/" style="font-size: 10px;">DIVIDE&CONQUER</a> <a href="/tags/DP/" style="font-size: 10px;">DP</a> <a href="/tags/HASHMAP/" style="font-size: 10px;">HASHMAP</a> <a href="/tags/HASHSET/" style="font-size: 15px;">HASHSET</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/LINUX/" style="font-size: 10px;">LINUX</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/NETWORK/" style="font-size: 10px;">NETWORK</a> <a href="/tags/WAF/" style="font-size: 15px;">WAF</a>
+      <a href="/tags/ALGORITHM/" style="font-size: 16.67px;">ALGORITHM</a> <a href="/tags/ANDROID/" style="font-size: 10px;">ANDROID</a> <a href="/tags/APACHE/" style="font-size: 13.33px;">APACHE</a> <a href="/tags/BRIDGE/" style="font-size: 10px;">BRIDGE</a> <a href="/tags/DIVIDE-CONQUER/" style="font-size: 10px;">DIVIDE&CONQUER</a> <a href="/tags/DP/" style="font-size: 10px;">DP</a> <a href="/tags/GREEDY/" style="font-size: 10px;">GREEDY</a> <a href="/tags/HASHMAP/" style="font-size: 10px;">HASHMAP</a> <a href="/tags/HASHSET/" style="font-size: 13.33px;">HASHSET</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/LINUX/" style="font-size: 10px;">LINUX</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/NETWORK/" style="font-size: 10px;">NETWORK</a> <a href="/tags/WAF/" style="font-size: 13.33px;">WAF</a>
     </div>
   </div>
 
@@ -920,7 +915,7 @@ DNS信息文件目录为 /etc/resolv.conf，不过需要注意，这只是自动
     <h3 class="widget-title">Archives</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">26</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">26</span></li></ul>
     </div>
   </div>
 
