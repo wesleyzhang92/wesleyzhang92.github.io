@@ -11,17 +11,20 @@
   
   
   
-  <meta name="description" content="本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。1.Monkey这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。monkey的使用方法如下：">
+  <meta name="description" content="本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。
+Monkey这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。monkey的使用方法如下：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android测试总结">
 <meta property="og:url" content="http://birdsman.top/2016/12/17/AndroidTest/index.html">
 <meta property="og:site_name" content="Birdsman's Destination">
-<meta property="og:description" content="本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。1.Monkey这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。monkey的使用方法如下：">
+<meta property="og:description" content="本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。
+Monkey这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。monkey的使用方法如下：">
 <meta property="og:image" content="http://static.open-open.com/lib/uploadImg/20160105/20160105220411_904.png">
-<meta property="og:updated_time" content="2016-12-17T05:56:45.000Z">
+<meta property="og:updated_time" content="2016-12-17T05:59:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android测试总结">
-<meta name="twitter:description" content="本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。1.Monkey这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。monkey的使用方法如下：">
+<meta name="twitter:description" content="本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。
+Monkey这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。monkey的使用方法如下：">
 <meta name="twitter:image" content="http://static.open-open.com/lib/uploadImg/20160105/20160105220411_904.png">
   
     <link rel="alternate" href="/atom.xml" title="Birdsman&#39;s Destination" type="application/atom+xml">
@@ -120,7 +123,9 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>  本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。<br>1.<a href="http://developer.android.com/intl/zh-cn/tools/help/monkey.html" target="_blank" rel="external">Monkey</a>这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。<br>monkey的使用方法如下：<br><img src="http://static.open-open.com/lib/uploadImg/20160105/20160105220411_904.png"><br><a id="more"></a><br>2.<a href="http://developer.android.com/intl/zh-cn/tools/help/monkeyrunner%5C_concepts.html" target="_blank" rel="external">MonkeyRunner</a><br>这个相对于Monkey 来说 就是真正意义上的 自动化测试工具了。只需要编写脚本即可完成 我们平时所需要的 大部分  冒烟用例等等。<br>尤其是在4.x以下的机型里，由于无法使用UIAutomator, MonkeyRunner几乎就是唯一的自动化测试编写办法。<br>下面我举个例子，比如我们app里最常用的登录功能，我们就可以编写一个脚本来完成。</p>
+        <p>  本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。</p>
+<h1 id="Monkey"><a href="#Monkey" class="headerlink" title="Monkey"></a><a href="http://developer.android.com/intl/zh-cn/tools/help/monkey.html" target="_blank" rel="external">Monkey</a></h1><p>这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。<br>monkey的使用方法如下：<br><img src="http://static.open-open.com/lib/uploadImg/20160105/20160105220411_904.png"><br><a id="more"></a></p>
+<h1 id="MonkeyRunner"><a href="#MonkeyRunner" class="headerlink" title="MonkeyRunner"></a><a href="http://developer.android.com/intl/zh-cn/tools/help/monkeyrunner%5C_concepts.html" target="_blank" rel="external">MonkeyRunner</a></h1><p>这个相对于Monkey 来说 就是真正意义上的 自动化测试工具了。只需要编写脚本即可完成 我们平时所需要的 大部分  冒烟用例等等。<br>尤其是在4.x以下的机型里，由于无法使用UIAutomator, MonkeyRunner几乎就是唯一的自动化测试编写办法。<br>下面我举个例子，比如我们app里最常用的登录功能，我们就可以编写一个脚本来完成。</p>
 <pre><code># coding=UTF-8
  from com.android.monkeyrunner import MonkeyRunner as mr
  from com.android.monkeyrunner import MonkeyDevice as md
@@ -151,8 +156,7 @@
  easy_device.type(By.id(&apos;id/password_et&apos;),&apos;123456&apos;)
  mr.sleep(2)
  easy_device.touch(By.id(&apos;id/submit_bt&apos;),md.DOWN_AND_UP)
-</code></pre><p>3.<a href="https://developer.android.com/reference/android/app/Instrumentation.html" target="_blank" rel="external">Instrumentation</a></p>
-<ul>
+</code></pre><h1 id="Instrumentation"><a href="#Instrumentation" class="headerlink" title="Instrumentation"></a><a href="https://developer.android.com/reference/android/app/Instrumentation.html" target="_blank" rel="external">Instrumentation</a></h1><ul>
 <li>该框架基于JUnit，因此既可以直接使用Junit 进行测试，也可以使用Instrumentation 来测试Android 组件</li>
 <li>其为Android 应用的每种组件提供了测试基类</li>
 <li>可以在Eclipse 中方便地创建Android Test Project，并将Test Case直接以Android JUnit的方式运行</li>
@@ -164,7 +168,7 @@
 <li>Teardown： 收尾工作，环境的清理</li>
 </ul>
 <p>局限性：需要利用源代码编写测试用例，对没有源代码的软件无法进行测试。尤其要注意由于View控件不是线程安全的，所以在处理时需要启动新线程进行处理。</p>
-<p>4.<a href="http://developer.android.com/intl/zh-cn/tools/testing-support-library/index.html" target="_blank" rel="external">UIAutomator</a><br>UI 测试框架；适合跨系统和已安装应用的跨应用功能性 UI 测试<br>UI Automator 测试框架的主要功能包括：</p>
+<h1 id="UIAutomator"><a href="#UIAutomator" class="headerlink" title="UIAutomator"></a><a href="http://developer.android.com/intl/zh-cn/tools/testing-support-library/index.html" target="_blank" rel="external">UIAutomator</a></h1><p>UI 测试框架；适合跨系统和已安装应用的跨应用功能性 UI 测试<br>UI Automator 测试框架的主要功能包括：</p>
 <ul>
 <li>用于检查布局层次结构的查看器。具提供了一个方便的 GUI，可以扫描和分析 Android 设备上当前显示的 UI 组件。您可以使用此工具检查布局层次结构，并查看在设备前台显示的 UI 组件属性。利用此信息，您可以使用 UI Automator（例如，通过创建与特定可见属性匹配的 UI 选择器）创建控制更加精确的测试。</li>
 <li><p>在目标设备上检索状态信息并执行操作的 API。UI Automator 测试框架提供了一个 UiDevice 类，用于在目标应用运行的设备上访问和执行操作。您可以调用其方法来访问设备属性，如当前屏幕方向或显示尺寸。UiDevice 类还可用于执行以下操作：</p>
@@ -246,7 +250,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-    <ol class="toc">None</ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Monkey"><span class="toc-number">1.</span> <span class="toc-text">Monkey</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MonkeyRunner"><span class="toc-number">2.</span> <span class="toc-text">MonkeyRunner</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Instrumentation"><span class="toc-number">3.</span> <span class="toc-text">Instrumentation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UIAutomator"><span class="toc-number">4.</span> <span class="toc-text">UIAutomator</span></a></li></ol>
     
     </div>
   </aside>
