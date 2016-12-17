@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android测试总结 | Birdsman&#39;s Destination</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Peking University" />
+  
+  
+  
+  
+  <meta name="description" content="本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。1.Monkey这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。monkey的使用方法如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android测试总结">
+<meta property="og:url" content="http://birdsman.top/2016/12/17/AndroidTest/index.html">
+<meta property="og:site_name" content="Birdsman's Destination">
+<meta property="og:description" content="本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。1.Monkey这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。monkey的使用方法如下：">
+<meta property="og:image" content="http://static.open-open.com/lib/uploadImg/20160105/20160105220411_904.png">
+<meta property="og:updated_time" content="2016-12-17T05:56:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android测试总结">
+<meta name="twitter:description" content="本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。1.Monkey这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。monkey的使用方法如下：">
+<meta name="twitter:image" content="http://static.open-open.com/lib/uploadImg/20160105/20160105220411_904.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Birdsman&#39;s Destination" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/hiero.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+<body>
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            <a href="http://www.birdsman.top" title="Birdsman" rel="home">
+              Birdsman&#39;s Destination</a>
+          </h1>
+          <div class="site-description">There is a long way to go</div>
+
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">Categories</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-AndroidTest" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Android测试总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2016/12/17/AndroidTest/" class="article-date">
+	  <time datetime="2016-12-17T05:19:53.000Z" itemprop="datePublished">December 17, 2016</time>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>  本篇文章主要介绍了四种Android自动化测试的常用工具，分别为：Monkey、MonkeyRunner、Instrumentation和UIAutomator。<br>1.<a href="http://developer.android.com/intl/zh-cn/tools/help/monkey.html" target="_blank" rel="external">Monkey</a>这个工具是最简单的，我主要用他来压力测试，所谓压力测试就是发送随机事件，模拟各种各样奇怪的操作 看你的app能不能抗的住。<br>monkey的使用方法如下：<br><img src="http://static.open-open.com/lib/uploadImg/20160105/20160105220411_904.png"><br><a id="more"></a><br>2.<a href="http://developer.android.com/intl/zh-cn/tools/help/monkeyrunner%5C_concepts.html" target="_blank" rel="external">MonkeyRunner</a><br>这个相对于Monkey 来说 就是真正意义上的 自动化测试工具了。只需要编写脚本即可完成 我们平时所需要的 大部分  冒烟用例等等。<br>尤其是在4.x以下的机型里，由于无法使用UIAutomator, MonkeyRunner几乎就是唯一的自动化测试编写办法。<br>下面我举个例子，比如我们app里最常用的登录功能，我们就可以编写一个脚本来完成。</p>
+<pre><code># coding=UTF-8
+ from com.android.monkeyrunner import MonkeyRunner as mr
+ from com.android.monkeyrunner import MonkeyDevice as md
+ from com.android.monkeyrunner import MonkeyImage as mi
+ from com.android.monkeyrunner.easy import EasyMonkeyDevice
+ from com.android.monkeyrunner.easy import By
+
+ #定义安装文件路径
+ installPackage = &apos;C:\\Users\\Administrator\\ViewPageTest\\app\\build\\outputs\\apk\\app-debug.apk&apos;
+
+ #要测试的程序的包名
+ apkPackageName =&apos;com.example.administrator.viewpagetest&apos;
+
+ #要启动的第一个activity的名称
+ initActivityName=apkPackageName+&quot;/com.example.administrator.viewpagetest.MainActivity&quot;
+ device = mr.waitForConnection()
+ #安装apk包
+ device.installPackage(installPackage.decode(&apos;utf-8&apos;))
+ #启动应用程序
+ device.startActivity(component=initActivityName)
+ #防止启动首页面 需要时间过长
+ mr.sleep(3)
+ easy_device = EasyMonkeyDevice(device)
+ mr.sleep(3)
+ easy_device.type(By.id(&apos;id/username_et&apos;),&apos;zhangsan&apos;)
+ # 这里的mr静止 主要用于演示demo上的gif效果 
+ mr.sleep(2)
+ easy_device.type(By.id(&apos;id/password_et&apos;),&apos;123456&apos;)
+ mr.sleep(2)
+ easy_device.touch(By.id(&apos;id/submit_bt&apos;),md.DOWN_AND_UP)
+</code></pre><p>3.<a href="https://developer.android.com/reference/android/app/Instrumentation.html" target="_blank" rel="external">Instrumentation</a></p>
+<ul>
+<li>该框架基于JUnit，因此既可以直接使用Junit 进行测试，也可以使用Instrumentation 来测试Android 组件</li>
+<li>其为Android 应用的每种组件提供了测试基类</li>
+<li>可以在Eclipse 中方便地创建Android Test Project，并将Test Case直接以Android JUnit的方式运行</li>
+</ul>
+<p>测试代码需要包括三个部分：</p>
+<ul>
+<li>Setup：环境的准备，获取控件等操作</li>
+<li>Assert：测试用例的编写</li>
+<li>Teardown： 收尾工作，环境的清理</li>
+</ul>
+<p>局限性：需要利用源代码编写测试用例，对没有源代码的软件无法进行测试。尤其要注意由于View控件不是线程安全的，所以在处理时需要启动新线程进行处理。</p>
+<p>4.<a href="http://developer.android.com/intl/zh-cn/tools/testing-support-library/index.html" target="_blank" rel="external">UIAutomator</a><br>UI 测试框架；适合跨系统和已安装应用的跨应用功能性 UI 测试<br>UI Automator 测试框架的主要功能包括：</p>
+<ul>
+<li>用于检查布局层次结构的查看器。具提供了一个方便的 GUI，可以扫描和分析 Android 设备上当前显示的 UI 组件。您可以使用此工具检查布局层次结构，并查看在设备前台显示的 UI 组件属性。利用此信息，您可以使用 UI Automator（例如，通过创建与特定可见属性匹配的 UI 选择器）创建控制更加精确的测试。</li>
+<li><p>在目标设备上检索状态信息并执行操作的 API。UI Automator 测试框架提供了一个 UiDevice 类，用于在目标应用运行的设备上访问和执行操作。您可以调用其方法来访问设备属性，如当前屏幕方向或显示尺寸。UiDevice 类还可用于执行以下操作：</p>
+<ul>
+<li>更改设备旋转</li>
+<li>按 D-pad 按钮</li>
+<li>按“返回”、“主屏幕”或“菜单”按钮</li>
+<li>打开通知栏</li>
+<li>对当前窗口进行屏幕截图</li>
+</ul>
+</li>
+<li>支持跨应用 UI 测试的 API。利用 UI Automator API，您可以编写稳健可靠的测试，而无需了解目标应用的实现详情。您可以使用这些 API 在多个应用中捕获和操作 UI 组件：<ul>
+<li>UiCollection：枚举容器的 UI 元素以便计算子元素个数，或者通过可见的文本或内容描述属性来指代子元素。</li>
+<li>UiObject：表示设备上可见的 UI 元素。</li>
+<li>UiScrollable：为在可滚动 UI 容器中搜索项目提供支持。</li>
+<li>UiSelector：表示在设备上查询一个或多个目标 UI 元素。</li>
+<li>Configurator：允许您设置运行 UI Automator 测试所需的关键参数。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/Android/">-Android</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ANDROID-TEST/">-ANDROID -TEST</a></li></ul>
+
+      
+        
+	<div id="comment">
+	
+	<!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="/2016/12/17/AndroidTest/" data-title="Android测试总结" data-url="http://birdsman.top/2016/12/17/AndroidTest/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"birdsman"};
+	  (function() {
+	    var ds = document.createElement('script');
+	    ds.type = 'text/javascript';ds.async = true;
+	    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	    ds.charset = 'UTF-8';
+	    (document.getElementsByTagName('head')[0] 
+	     || document.getElementsByTagName('body')[0]).appendChild(ds);
+	  })();
+	  </script>
+	<!-- 多说公共JS代码 end -->
+	
+	</div>
+	<link rel="stylesheet" href="/css/comment.css">
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/14/GreedyAlgorithm/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">贪心算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+    <ol class="toc">None</ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2016 Birdsman&#39;s Destination All Rights Reserved.
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-77161859-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+</body>
+</html>
