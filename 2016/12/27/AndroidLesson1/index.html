@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>android入门介绍 | Birdsman&#39;s Destination</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Peking University" />
+  
+  
+  
+  
+  <meta name="description" content="开启Android学习的第一步，学习创建应用，了解Android的基本架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android入门介绍">
+<meta property="og:url" content="http://birdsman.top/2016/12/27/AndroidLesson1/index.html">
+<meta property="og:site_name" content="Birdsman's Destination">
+<meta property="og:description" content="开启Android学习的第一步，学习创建应用，了解Android的基本架构">
+<meta property="og:image" content="https://developer.android.com/images/viewgroup.png">
+<meta property="og:image" content="https://developer.android.com/images/training/firstapp/edittext_gravity.png">
+<meta property="og:updated_time" content="2016-12-28T02:06:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android入门介绍">
+<meta name="twitter:description" content="开启Android学习的第一步，学习创建应用，了解Android的基本架构">
+<meta name="twitter:image" content="https://developer.android.com/images/viewgroup.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Birdsman&#39;s Destination" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/hiero.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+<body>
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            <a href="http://www.birdsman.top" title="Birdsman" rel="home">
+              Birdsman&#39;s Destination</a>
+          </h1>
+          <div class="site-description">There is a long way to go</div>
+
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">Categories</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-AndroidLesson1" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Android入门介绍
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2016/12/27/AndroidLesson1/" class="article-date">
+	  <time datetime="2016-12-27T07:35:00.000Z" itemprop="datePublished">December 27, 2016</time>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>开启Android学习的第一步，学习创建应用，了解Android的基本架构<br><a id="more"></a></p>
+</blockquote>
+<h2 id="Android系统架构"><a href="#Android系统架构" class="headerlink" title="Android系统架构"></a>Android系统架构</h2><ol>
+<li><p>Linux内核层：为Android设备的各种硬件提供底层的驱动</p>
+</li>
+<li><p>系统运行库层：利用一些C/C++的库来为Android系统提供主要的特性支撑，包括了SQLite库、OpenGL库和Webkit库等。同样在这一层还有Android的运行时库，主要提供了一些核心库，允许使用Java语言来编写Android应用。包括了Dalvik虚拟机（Android 5.0 之前）或者ART运行环境，使得<strong>每一个Android应用都运行在独立的进程之中，并且拥有一个自己的虚拟机实例。</strong></p>
+<blockquote>
+<p>Dalvik虚拟机，是Google等厂商合作开发的Android移动设备平台的核心组成部分之一。它可以支持已转换为.dex（即“Dalvik Executable”）格式的Java应用程序的运行。.dex格式是专为Dalvik设计的一种压缩格式，适合内存和处理器速度有限的系统。</p>
+</blockquote>
+<p>大多数虚拟机包括JVM都是一种堆栈机器，而Dalvik虚拟机则是寄存器机。两种架构各有优劣，一般而言，基于堆栈的机器需要更多指令，而基于寄存器的机器指令更长。</p>
+<blockquote>
+<p>Android Runtime（缩写为 ART），是一种在Android操作系统上的运行环境，由Google公司研发，在Android 5.0及后续Android版本中作为正式的运行时库取代了以往的Dalvik虚拟机。ART能够把应用程序的字节码转换为机器码，是Android所使用的一种新的虚拟机。它与Dalvik的主要不同在于：Dalvik采用的是JIT技术，而ART采用Ahead-of-time（AOT）技术。 ART同时也改善了性能、垃圾回收(Garbage Collection)、应用程序除错以及性能分析。</p>
+</blockquote>
+<p><strong>Dalvik与ART的区别在于：</strong></p>
+<p>在应用程序启动时，JIT通过进行连续的性能分析来优化程序代码的执行，在程序运行的过程中，Dalvik虚拟机在不断的进行将字节码编译成机器码的工作。</p>
+<p>ART引入了AOT这种预编译技术，在应用程序安装的过程中，ART就已经将所有的字节码重新编译成了机器码。应用程序运行过程中无需进行实时的编译工作，只需要进行直接调用.因此，ART极大的提高了应用程序的运行效率，同时也减少了手机的电量消耗，提高了移动设备的续航能力，在垃圾回收等机制上也有了较大的提升。</p>
+<p>相对于Dalvik虚拟机模式，ART模式下Android应用程序的安装需要消耗更多的时间，同时也会占用更大的储存空间（指内部储存，用于储存编译后的代码）,但节省了很多Dalvik虚拟机用于实时编译的时间</p>
+<blockquote>
+<p>Dalvik与JVM主要区别：</p>
+<p>Dalvik是基于寄存器的，而JVM是基于栈的。</p>
+<p>Dalvik运行dex文件，而JVM运行java字节码</p>
+</blockquote>
+<p>自Android 2.2开始，Dalvik支持JIT（just-in-time，即时编译技术）。优化后的Dalvik较其他标准虚拟机存在一些不同特性:　</p>
+<blockquote>
+<p>1.占用更少空间　</p>
+<p>2.为简化翻译，常量池只使用32位索引　　</p>
+<p>3.标准Java字节码实行8位堆栈指令,Dalvik使用16位指令集直接作用于局部变量。局部变量通常来自4位的“虚拟寄存器”区。这样减少了Dalvik的指令计数，提高了翻译速度。　</p>
+</blockquote>
+</li>
+<li><p>应用框架层：主要提供了构建程序可能用到的各种API，Android自带的核心应用就是利用这样的API实现的，包括了ActivityManager、PackageManager等等。</p>
+</li>
+<li><p>应用层：所有安装在手机上的应用都属于这一层次。</p>
+</li>
+</ol>
+<h2 id="Android四大组件"><a href="#Android四大组件" class="headerlink" title="Android四大组件"></a>Android四大组件</h2><ol>
+<li>活动（Activity）</li>
+<li>服务（Service）</li>
+<li>广播接收器（Broadcast Receiver）</li>
+<li>内容提供器（Content Provider）</li>
+</ol>
+<h2 id="Android-Studio-代码架构"><a href="#Android-Studio-代码架构" class="headerlink" title="Android Studio 代码架构"></a>Android Studio 代码架构</h2><ol>
+<li>app目录，存放项目中的代码和资源<ul>
+<li>libs：项目中的第三方jar包</li>
+<li>java：Java代码</li>
+<li>res：项目中所有的图片、布局、字符串等资源</li>
+<li>proguard-rules.pro：用于指定项目代码的混淆规则</li>
+<li>build.gradle：app模块的gradle构建脚本，指定项目相关的配置<ul>
+<li>apply plugin: ‘com.android.application’表明为应用，library表明为库文件</li>
+<li>android闭包中指定了项目的SDK版本，defaultConfig中指定应用的包名、版本号等</li>
+<li>buildTypes：指定生成安装文件的相关配置，包括了是否进行代码混淆等，通常会包含debug和release两个子闭包</li>
+<li>dependencies闭包，指定了当前项目的所有依赖关系，包括了本地依赖、库依赖和远程依赖</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>gradle目录：包含了gradle wrapper的配置文件</li>
+</ol>
+<h2 id="构建简单的UI界面"><a href="#构建简单的UI界面" class="headerlink" title="构建简单的UI界面"></a>构建简单的UI界面</h2><p><img src="https://developer.android.com/images/viewgroup.png" alt="UI界面架构"></p>
+<ul>
+<li><p>View对象通常为UI控件，如按键和文本框等</p>
+</li>
+<li><p>ViewGroup对象是决定了View控件如何排列的不可见的容器，布局（Layout）就是ViewGroup的子类。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">EditText</span> <span class="attr">android:id</span>=<span class="string">"@+id/edit_message"</span></span></div><div class="line">        <span class="attr">android:layout_weight</span>=<span class="string">"1"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"0dp"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:hint</span>=<span class="string">"@string/edit_message"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">Button</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:text</span>=<span class="string">"@string/button_send"</span> /&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="https://developer.android.com/images/training/firstapp/edittext_gravity.png" alt="布局展示"></p>
+<p>在设定控件宽度时，推荐使用的是 <strong>android:layout__weight</strong> 属性，其中的数值代表其占用除去兄弟元素剩下空间的比例。</p>
+<p>Setting the width to zero (0dp) improves layout performance because using <code>&quot;wrap_content&quot;</code> as the width requires the system to calculate a width that is ultimately irrelevant because the weight value requires another width calculation to fill the remaining space.</p>
+<h2 id="启动一个活动"><a href="#启动一个活动" class="headerlink" title="启动一个活动"></a>启动一个活动</h2><ol>
+<li><p>为按钮添加点击事件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Button</span></span></div><div class="line">      <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">      <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">      <span class="attr">android:text</span>=<span class="string">"@string/button_send"</span></div><div class="line">      <span class="attr">android:onClick</span>=<span class="string">"sendMessage"</span> /&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建事件处理方法，注意方法要为public、包含返回值，传入的参数只有View。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> String EXTRA_MESSAGE = <span class="string">"com.example.myfirstapp.MESSAGE"</span>;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/** Called when the user clicks the Send button */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendMessage</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, DisplayMessageActivity.class);</div><div class="line">        EditText editText = (EditText) findViewById(R.id.edit_message);</div><div class="line">        String message = editText.getText().toString();</div><div class="line">        intent.putExtra(EXTRA_MESSAGE, message);</div><div class="line">        startActivity(intent);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>构建一个Intent，Intent是在运行时对两个分离的组件提供绑定操作的对象，在这里用来启动一个Activity。</p>
+<p>The <code>Intent</code> constructor takes two parameters:</p>
+<ul>
+<li>A <code>Context</code> as its first parameter (<code>this</code> is used because the <code>Activity</code> class is a subclass of <code>Context</code>)</li>
+<li>The <code>Class</code> of the app component to which the system should deliver the <code>Intent</code> (in this case, the activity that should be started).</li>
+</ul>
+</li>
+<li><p>startActivity启动新的Activity，可以在新的Activity中获取Intent中的信息。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ANDROID/">ANDROID</a></li></ul>
+
+      
+        
+	<div id="comment">
+	
+	<!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="/2016/12/27/AndroidLesson1/" data-title="Android入门介绍" data-url="http://birdsman.top/2016/12/27/AndroidLesson1/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"birdsman"};
+	  (function() {
+	    var ds = document.createElement('script');
+	    ds.type = 'text/javascript';ds.async = true;
+	    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	    ds.charset = 'UTF-8';
+	    (document.getElementsByTagName('head')[0] 
+	     || document.getElementsByTagName('body')[0]).appendChild(ds);
+	  })();
+	  </script>
+	<!-- 多说公共JS代码 end -->
+	
+	</div>
+	<link rel="stylesheet" href="/css/comment.css">
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/17/AndroidTest/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android测试总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Android系统架构"><span class="toc-number">1.</span> <span class="toc-text">Android系统架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android四大组件"><span class="toc-number">2.</span> <span class="toc-text">Android四大组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-Studio-代码架构"><span class="toc-number">3.</span> <span class="toc-text">Android Studio 代码架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建简单的UI界面"><span class="toc-number">4.</span> <span class="toc-text">构建简单的UI界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动一个活动"><span class="toc-number">5.</span> <span class="toc-text">启动一个活动</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2016 Birdsman&#39;s Destination All Rights Reserved.
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-77161859-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+</body>
+</html>
