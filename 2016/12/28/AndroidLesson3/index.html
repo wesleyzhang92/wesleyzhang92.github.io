@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>利用碎片创建动态ui | Birdsman&#39;s Destination</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Peking University" />
+  
+  
+  
+  
+  <meta name="description" content="碎片，Fragments可以看作是用户活动界面的一部分，可以在一个活动中包含多个碎片，也可以在不同活动中共用一个碎片。碎片也有自己的生命周期，可以在Activity运行时添加或者删除碎片。
+
+
+&amp;lt;!—more–&amp;gt;
+创建一个碎片Fragment
+
+创建一个碎片类
+创建的碎片类继承Fragment类，然后重写生命周期的方法，添加自己应用的逻辑。与创建活动的不同是，在创建碎片时，一定要用O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用碎片创建动态UI">
+<meta property="og:url" content="http://birdsman.top/2016/12/28/AndroidLesson3/index.html">
+<meta property="og:site_name" content="Birdsman's Destination">
+<meta property="og:description" content="碎片，Fragments可以看作是用户活动界面的一部分，可以在一个活动中包含多个碎片，也可以在不同活动中共用一个碎片。碎片也有自己的生命周期，可以在Activity运行时添加或者删除碎片。
+
+
+&amp;lt;!—more–&amp;gt;
+创建一个碎片Fragment
+
+创建一个碎片类
+创建的碎片类继承Fragment类，然后重写生命周期的方法，添加自己应用的逻辑。与创建活动的不同是，在创建碎片时，一定要用O">
+<meta property="og:image" content="https://developer.android.com/images/fundamentals/fragments.png">
+<meta property="og:image" content="https://developer.android.com/images/fragment_lifecycle.png">
+<meta property="og:updated_time" content="2016-12-29T02:21:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用碎片创建动态UI">
+<meta name="twitter:description" content="碎片，Fragments可以看作是用户活动界面的一部分，可以在一个活动中包含多个碎片，也可以在不同活动中共用一个碎片。碎片也有自己的生命周期，可以在Activity运行时添加或者删除碎片。
+
+
+&amp;lt;!—more–&amp;gt;
+创建一个碎片Fragment
+
+创建一个碎片类
+创建的碎片类继承Fragment类，然后重写生命周期的方法，添加自己应用的逻辑。与创建活动的不同是，在创建碎片时，一定要用O">
+<meta name="twitter:image" content="https://developer.android.com/images/fundamentals/fragments.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Birdsman&#39;s Destination" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/hiero.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+<body>
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            <a href="http://www.birdsman.top" title="Birdsman" rel="home">
+              Birdsman&#39;s Destination</a>
+          </h1>
+          <div class="site-description">There is a long way to go</div>
+
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">Categories</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-AndroidLesson3" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      利用碎片创建动态UI
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2016/12/28/AndroidLesson3/" class="article-date">
+	  <time datetime="2016-12-28T08:35:00.000Z" itemprop="datePublished">December 28, 2016</time>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>碎片，Fragments可以看作是用户活动界面的一部分，可以在一个活动中包含多个碎片，也可以在不同活动中共用一个碎片。碎片也有自己的生命周期，可以在Activity运行时添加或者删除碎片。</p>
+<p><img src="https://developer.android.com/images/fundamentals/fragments.png" alt="Fragments"></p>
+</blockquote>
+<p>&lt;!—more–&gt;</p>
+<h2 id="创建一个碎片Fragment"><a href="#创建一个碎片Fragment" class="headerlink" title="创建一个碎片Fragment"></a>创建一个碎片Fragment</h2><p><img src="https://developer.android.com/images/fragment_lifecycle.png" alt="生命周期"></p>
+<ol>
+<li><p>创建一个碎片类</p>
+<p>创建的碎片类继承Fragment类，然后重写生命周期的方法，添加自己应用的逻辑。与创建活动的不同是，在创建碎片时，一定要用OnCreateView()回调函数来定义布局。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.support.v4.app.Fragment;</div><div class="line"><span class="keyword">import</span> android.view.LayoutInflater;</div><div class="line"><span class="keyword">import</span> android.view.ViewGroup;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArticleFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container,</span></span></div><div class="line">        Bundle savedInstanceState) &#123;</div><div class="line">        <span class="comment">// Inflate the layout for this fragment</span></div><div class="line">        <span class="keyword">return</span> inflater.inflate(R.layout.article_view, container, <span class="keyword">false</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>利用XML将碎片添加到活动中</p>
+<p>碎片是一个可重用的模块化的UI组件，每一个碎片类的实例都要和一个父活动相关联，可以通过在活动的XML里面定义碎片来达到这种关联。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.support.v4.app.FragmentActivity;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">FragmentActivity</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.news_articles);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="构建一个灵活的UI"><a href="#构建一个灵活的UI" class="headerlink" title="构建一个灵活的UI"></a>构建一个灵活的UI</h2><p>FragmentManager类提供了在运行时向活动中添加、移除和替换碎片的方法，用来实现动态的体验。</p>
+<ol>
+<li><p>运行时在活动中添加碎片</p>
+<p>在活动的onCreate()方法中初始化碎片，同时要确保你的活动布局中包含一个可以插入碎片的容器View，利用FrameLayout充当碎片容器。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">FrameLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/fragment_container"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>具体的操作方式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">FragmentActivity</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.news_articles);</div><div class="line"></div><div class="line">        <span class="comment">// Check that the activity is using the layout version with</span></div><div class="line">        <span class="comment">// the fragment_container FrameLayout</span></div><div class="line">        <span class="keyword">if</span> (findViewById(R.id.fragment_container) != <span class="keyword">null</span>) &#123;</div><div class="line"></div><div class="line">            <span class="comment">// However, if we're being restored from a previous state,</span></div><div class="line">            <span class="comment">// then we don't need to do anything and should return or else</span></div><div class="line">            <span class="comment">// we could end up with overlapping fragments.</span></div><div class="line">            <span class="keyword">if</span> (savedInstanceState != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// Create a new Fragment to be placed in the activity layout</span></div><div class="line">            HeadlinesFragment firstFragment = <span class="keyword">new</span> HeadlinesFragment();</div><div class="line"></div><div class="line">            <span class="comment">// In case this activity was started with special instructions from an</span></div><div class="line">            <span class="comment">// Intent, pass the Intent's extras to the fragment as arguments</span></div><div class="line">            firstFragment.setArguments(getIntent().getExtras());</div><div class="line"></div><div class="line">            <span class="comment">// Add the fragment to the 'fragment_container' FrameLayout</span></div><div class="line">            getSupportFragmentManager().beginTransaction()</div><div class="line">                    .add(R.id.fragment_container, firstFragment).commit();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>碎片间的替换</p>
+<p>替换与添加碎片的流程基本相同，只是用replace()方法替换add()方法。如果允许用户返回操作，需要在替换之前调用addToBackStack()方法，此时用户替换了碎片，之前的碎片处于的状态是stopped，而不是destoryed。</p>
+</li>
+</ol>
+<h2 id="碎片间的消息传递"><a href="#碎片间的消息传递" class="headerlink" title="碎片间的消息传递"></a>碎片间的消息传递</h2>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ANDROID/">ANDROID</a></li></ul>
+
+      
+        
+	<div id="comment">
+	
+	<!-- 多说评论框 start -->
+	 <div class="ds-thread" data-thread-key="/2016/12/28/AndroidLesson3/" data-title="利用碎片创建动态UI" data-url="http://birdsman.top/2016/12/28/AndroidLesson3/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"birdsman"};
+	  (function() {
+	    var ds = document.createElement('script');
+	    ds.type = 'text/javascript';ds.async = true;
+	    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+	    ds.charset = 'UTF-8';
+	    (document.getElementsByTagName('head')[0] 
+	     || document.getElementsByTagName('body')[0]).appendChild(ds);
+	  })();
+	  </script>
+	<!-- 多说公共JS代码 end -->
+	
+	</div>
+	<link rel="stylesheet" href="/css/comment.css">
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/29/AndroidLesson4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          四大组件之--活动
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/28/AndroidLesson2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android的多设备支持</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建一个碎片Fragment"><span class="toc-number">1.</span> <span class="toc-text">创建一个碎片Fragment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建一个灵活的UI"><span class="toc-number">2.</span> <span class="toc-text">构建一个灵活的UI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#碎片间的消息传递"><span class="toc-number">3.</span> <span class="toc-text">碎片间的消息传递</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2016 Birdsman&#39;s Destination All Rights Reserved.
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-77161859-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+  
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+</body>
+</html>

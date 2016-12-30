@@ -96,6 +96,158 @@
         
           <section id="main">
   
+    <article id="post-AndroidLesson4"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2016/12/29/AndroidLesson4/">四大组件之--活动</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2016/12/29/AndroidLesson4/" class="article-date">
+	  <time datetime="2016-12-29T10:35:00.000Z" itemprop="datePublished">December 29, 2016</time>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>活动（Activity）是一种可以包含用户界面的组件，主要用于和用户进行交互。一个程序中可以包含零个或多个活动。</p>
+<p>&lt;!—more–&gt;</p>
+<h2 id="活动的概念"><a href="#活动的概念" class="headerlink" title="活动的概念"></a>活动的概念</h2><p>实现的每一个活动都是Activity的子类，通常情况下每一个Activity都实现了不同的功能，不过每一个有多个活动的应用都应该指名一个作为main activity，即用户打开应用所见的活动，Activity之间可以互相启动。不同应用之间的活动也可以互相启动，在使用活动时，需要在应用的manifest中进行注册，并处理好Activity的生命周期。</p>
+<h2 id="配置Manifest文件"><a href="#配置Manifest文件" class="headerlink" title="配置Manifest文件"></a>配置Manifest文件</h2><p>为了让应用可以使用创建的活动，就需要在manifest中对活动以及活动的一些属性进行声明。</p>
+<h3 id="声明活动"><a href="#声明活动" class="headerlink" title="声明活动"></a>声明活动</h3><p>在manifest文件中添加\<activity\>标签，必要的属性是指定Activity的name，对应于Activity的类名，更多的属性可以参看<a href="https://developer.android.com/guide/topics/manifest/activity-element.html" target="_blank" rel="external">activity</a></activity\></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">...</span> &gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">application</span> <span class="attr">...</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".ExampleActivity"</span> /&gt;</span></div><div class="line">      ...</div><div class="line">  <span class="tag">&lt;/<span class="name">application</span> <span class="attr">...</span> &gt;</span></div><div class="line">  ...</div><div class="line"><span class="tag">&lt;/<span class="name">manifest</span> &gt;</span></div></pre></td></tr></table></figure>
+<h3 id="声明Intent-filters"><a href="#声明Intent-filters" class="headerlink" title="声明Intent filters"></a>声明Intent filters</h3><p>Intent filter提供了显示或者隐示的方式去启动一个活动的方式。为\<activity\>元素指定intent filter属性、action属性、category属性和data属性，通过这些属性可以确定一个活动可以响应哪些种类的intent。</activity\></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".ExampleActivity"</span> <span class="attr">android:icon</span>=<span class="string">"@drawable/app_icon"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.SEND"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:mimeType</span>=<span class="string">"text/plain"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在启动这个Activity时，可以按照下面这样写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Create the text message with a string</span></div><div class="line">Intent sendIntent = <span class="keyword">new</span> Intent();</div><div class="line">sendIntent.setAction(Intent.ACTION_SEND);</div><div class="line">sendIntent.putExtra(Intent.EXTRA_TEXT, textMessage);</div><div class="line">sendIntent.setType(<span class="string">"text/plain"</span>);</div><div class="line"><span class="comment">// Start the activity</span></div><div class="line">startActivity(sendIntent);</div></pre></td></tr></table></figure>
+<p>Activities that you don’t want to make available to other applications should have no intent filters, and you can start them yourself using explicit intents.更多intent的介绍参见<a href="https://developer.android.com/guide/components/intents-filters.html" target="_blank" rel="external">Intent &amp; Intent Filters</a></p>
+<h3 id="声明activity权限"><a href="#声明activity权限" class="headerlink" title="声明activity权限"></a>声明activity权限</h3><p>利用权限可以控制哪些应用可以启动这个特定的活动，activity只能被声明了相同权限的activity启动。此时需要指定\<uses-permission\></uses-permission\></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">manifest</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">"...."</span></span></div><div class="line">   <span class="attr">android:permission</span>=<span class="string">”com.google.socialapp.permission.SHARE_POST”</span></div><div class="line"></div><div class="line">/&gt;</div></pre></td></tr></table></figure>
+<h2 id="管理活动的生命周期"><a href="#管理活动的生命周期" class="headerlink" title="管理活动的生命周期"></a>管理活动的生命周期</h2><p><img src="https://developer.android.com/guide/components/images/activity_lifecycle.png" alt="lifecycle"></p>
+<p>在生命周期中一共包含了六个回调函数，分别为onCreate(), onStart(), onResume(), onPause(), onStop(), 和 onDestroy()，通常不需要实现所有的回调函数。</p>
+<h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><ol>
+<li><p>onCreate()</p>
+<p>必须实现onCreate函数，当系统首次创建这个活动时执行，整个生命周期执行一次。接受参数 <code>savedInstanceState</code>, 是一个保存了活动之前的状态的 <code>Bundle</code> 对象，如果活动之前从没出现，则值为null。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="comment">// call the super class onCreate to complete the creation of activity like</span></div><div class="line">    <span class="comment">// the view hierarchy</span></div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line"></div><div class="line">    <span class="comment">// recovering the instance state</span></div><div class="line">    <span class="keyword">if</span> (savedInstanceState != <span class="keyword">null</span>) &#123;</div><div class="line">        mGameState = savedInstanceState.getString(GAME_STATE_KEY);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// set the user interface layout for this Activity</span></div><div class="line">    <span class="comment">// the layout file is defined in the project res/layout/main_activity.xml file</span></div><div class="line">    setContentView(R.layout.main_activity);</div><div class="line"></div><div class="line">    <span class="comment">// initialize member TextView so we can manipulate it later</span></div><div class="line">    mTextView = (TextView) findViewById(R.id.text_view);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// This callback is called only when there is a saved instance previously saved using</span></div><div class="line"><span class="comment">// onSaveInstanceState(). We restore some state in onCreate() while we can optionally restore</span></div><div class="line"><span class="comment">// other state here, possibly usable after onStart() has completed.</span></div><div class="line"><span class="comment">// The savedInstanceState Bundle is same as the one used in onCreate().</span></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onRestoreInstanceState</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    mTextView.setText(savedInstanceState.getString(TEXT_VIEW_KEY));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// invoked when the activity may be temporarily destroyed, save the instance state here</span></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</div><div class="line">    out.putString(GAME_STATE_KEY, mGameState);</div><div class="line">    out.putString(TEXT_VIEW_KEY, mTextView.getText());</div><div class="line"></div><div class="line">    <span class="comment">// call superclass to save any view hierarchy</span></div><div class="line">    <span class="keyword">super</span>.onSaveInstanceState(out);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>onStart()</p>
+<p>这个阶段使活动变得用户可见，执行的速度很快，马上就进入到resume的状态。</p>
+</li>
+<li><p>onResume()</p>
+<p>Activity进入到前台，开始和用户交互，应用将一直保持这种状态直到一些中断事件发生，状态会进入到paused，当从pause阶段返回时，会再次调用onResume()。 You should implement <code>onResume()</code> to initialize components that you release during <code>onPause()</code>, and perform any other initializations that must occur each time the activity enters the Resumed state. For example, you should begin animations and initialize components that the activity only uses when it has user focus.</p>
+</li>
+<li><p>onPause()</p>
+<p>当用户离开当前活动时会调用这个方法，执行时间很短，不能在这个阶段保存当前活动的数据。You can use the <code>onPause()</code> method to release system resources, such as broadcast receivers, handles to sensors (like GPS), or any resources that may affect battery life while your activity is paused and the user does not need them.onPause阶段结束之后，Activity仍处在pause的状态，直到重新调用resume或者彻底对用户不可见。</p>
+</li>
+<li><p>onStop()</p>
+<p>当Activity对用户彻底不可见时，就进入到了Stopped状态。在onStop方法中，应用会释放几乎所有用户不在使用的资源，可以防止内存泄漏。也可以利用onStop()进行一些需要消耗CPU的操作，如将数据保存到数据库等。在Stopped状态，Activity仍然驻留内存，所有View对象的状态都被系统保留，即使由于内存不足被系统kill，UI控件的状态信息仍然以bundle形式保存。</p>
+</li>
+<li><p>onDestory()</p>
+<p>finish()的调用或者系统内存不足会导致进入onDestory，当屏幕方向转变时，也会先Destroy然后重新创建一个活动。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ANDROID/">ANDROID</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-AndroidLesson3"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2016/12/28/AndroidLesson3/">利用碎片创建动态UI</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2016/12/28/AndroidLesson3/" class="article-date">
+	  <time datetime="2016-12-28T08:35:00.000Z" itemprop="datePublished">December 28, 2016</time>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>碎片，Fragments可以看作是用户活动界面的一部分，可以在一个活动中包含多个碎片，也可以在不同活动中共用一个碎片。碎片也有自己的生命周期，可以在Activity运行时添加或者删除碎片。</p>
+<p><img src="https://developer.android.com/images/fundamentals/fragments.png" alt="Fragments"></p>
+</blockquote>
+<p>&lt;!—more–&gt;</p>
+<h2 id="创建一个碎片Fragment"><a href="#创建一个碎片Fragment" class="headerlink" title="创建一个碎片Fragment"></a>创建一个碎片Fragment</h2><p><img src="https://developer.android.com/images/fragment_lifecycle.png" alt="生命周期"></p>
+<ol>
+<li><p>创建一个碎片类</p>
+<p>创建的碎片类继承Fragment类，然后重写生命周期的方法，添加自己应用的逻辑。与创建活动的不同是，在创建碎片时，一定要用OnCreateView()回调函数来定义布局。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.support.v4.app.Fragment;</div><div class="line"><span class="keyword">import</span> android.view.LayoutInflater;</div><div class="line"><span class="keyword">import</span> android.view.ViewGroup;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArticleFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container,</span></span></div><div class="line">        Bundle savedInstanceState) &#123;</div><div class="line">        <span class="comment">// Inflate the layout for this fragment</span></div><div class="line">        <span class="keyword">return</span> inflater.inflate(R.layout.article_view, container, <span class="keyword">false</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>利用XML将碎片添加到活动中</p>
+<p>碎片是一个可重用的模块化的UI组件，每一个碎片类的实例都要和一个父活动相关联，可以通过在活动的XML里面定义碎片来达到这种关联。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.os.Bundle;</div><div class="line"><span class="keyword">import</span> android.support.v4.app.FragmentActivity;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">FragmentActivity</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.news_articles);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="构建一个灵活的UI"><a href="#构建一个灵活的UI" class="headerlink" title="构建一个灵活的UI"></a>构建一个灵活的UI</h2><p>FragmentManager类提供了在运行时向活动中添加、移除和替换碎片的方法，用来实现动态的体验。</p>
+<ol>
+<li><p>运行时在活动中添加碎片</p>
+<p>在活动的onCreate()方法中初始化碎片，同时要确保你的活动布局中包含一个可以插入碎片的容器View，利用FrameLayout充当碎片容器。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">FrameLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/fragment_container"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>具体的操作方式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">FragmentActivity</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.news_articles);</div><div class="line"></div><div class="line">        <span class="comment">// Check that the activity is using the layout version with</span></div><div class="line">        <span class="comment">// the fragment_container FrameLayout</span></div><div class="line">        <span class="keyword">if</span> (findViewById(R.id.fragment_container) != <span class="keyword">null</span>) &#123;</div><div class="line"></div><div class="line">            <span class="comment">// However, if we're being restored from a previous state,</span></div><div class="line">            <span class="comment">// then we don't need to do anything and should return or else</span></div><div class="line">            <span class="comment">// we could end up with overlapping fragments.</span></div><div class="line">            <span class="keyword">if</span> (savedInstanceState != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// Create a new Fragment to be placed in the activity layout</span></div><div class="line">            HeadlinesFragment firstFragment = <span class="keyword">new</span> HeadlinesFragment();</div><div class="line"></div><div class="line">            <span class="comment">// In case this activity was started with special instructions from an</span></div><div class="line">            <span class="comment">// Intent, pass the Intent's extras to the fragment as arguments</span></div><div class="line">            firstFragment.setArguments(getIntent().getExtras());</div><div class="line"></div><div class="line">            <span class="comment">// Add the fragment to the 'fragment_container' FrameLayout</span></div><div class="line">            getSupportFragmentManager().beginTransaction()</div><div class="line">                    .add(R.id.fragment_container, firstFragment).commit();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>碎片间的替换</p>
+<p>替换与添加碎片的流程基本相同，只是用replace()方法替换add()方法。如果允许用户返回操作，需要在替换之前调用addToBackStack()方法，此时用户替换了碎片，之前的碎片处于的状态是stopped，而不是destoryed。</p>
+</li>
+</ol>
+<h2 id="碎片间的消息传递"><a href="#碎片间的消息传递" class="headerlink" title="碎片间的消息传递"></a>碎片间的消息传递</h2>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ANDROID/">ANDROID</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-AndroidLesson2"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -104,7 +256,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2016/12/27/AndroidLesson2/">Android入门介绍</a>
+      <a class="article-title" href="/2016/12/28/AndroidLesson2/">Android的多设备支持</a>
     </h1>
   
 
@@ -112,8 +264,8 @@
     
     <div class="article-meta">
       
-	Posted on <a href="/2016/12/27/AndroidLesson2/" class="article-date">
-	  <time datetime="2016-12-27T07:35:00.000Z" itemprop="datePublished">December 27, 2016</time>
+	Posted on <a href="/2016/12/28/AndroidLesson2/" class="article-date">
+	  <time datetime="2016-12-28T07:35:00.000Z" itemprop="datePublished">December 28, 2016</time>
 	</a>
 
     </div>
@@ -134,7 +286,7 @@ Android设备和系统都非常的碎片化，包括了他们形状大小各异�
 
         
           <p class="article-more-link">
-            <a href="/2016/12/27/AndroidLesson2/#more">Continue Reading →</a>
+            <a href="/2016/12/28/AndroidLesson2/#more">Continue Reading →</a>
           </p>
         </div>
       
@@ -568,129 +720,6 @@ TASK ANALYSIS1、输入 a，b2、按照位把ab相加，不考虑进位，结果
 <!-- Table of Contents -->
 
   
-    <article id="post-Modsecurity"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2016/07/07/Modsecurity/">Modsecurity 源代码分析</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2016/07/07/Modsecurity/" class="article-date">
-	  <time datetime="2016-07-07T09:04:46.000Z" itemprop="datePublished">July 7, 2016</time>
-	</a>
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-            <div class="entry-summary" style="margin-left:0;">
-            ModSecurity处理事件的5个阶段Phase1:请求头阶段，处于这个阶段的Modsecurity规则，会在Apache完成请求头后，立即被执行。到这个时候还没有读取到请求体，意即并不是所有的请求的参数都可以被使用。
-Phase2:请求体阶段，这个阶段属于输入分析阶段，大部分的应用规则也不会部署于这个阶段。这个阶段可以接收到来自于正常请求的一些参数。在请求体阶段，Modsecurity支持三种编码方式，具体编码方式如下：
-
-Application/x-www-form-urlencode
-Multipart/from-data
-Text/xml
-Phase3:响应头阶段，这个阶段发生在响应头被发送到客户端之前。在这个阶段，一些响应的状态码（如404）在请求的早起就被Apache服务...
-          
-
-        
-          <p class="article-more-link">
-            <a href="/2016/07/07/Modsecurity/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/Project/">Project</a>
-
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/APACHE/">APACHE</a></li></ul>
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-Libpcap"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2016/06/30/Libpcap/">Libpcap的使用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2016/06/30/Libpcap/" class="article-date">
-	  <time datetime="2016-06-30T01:10:41.000Z" itemprop="datePublished">June 30, 2016</time>
-	</a>
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-            <div class="entry-summary" style="margin-left:0;">
-            Libpcap是一个提供了网络抓包高级接口的一个开源库，主要的目的就是创建了平台独立的API。抓包的整个过程图如下所示：
-
-利用libpcap开发的一般步骤如下：
-
-1.监听接口操作1char *pcap_lookupdev(char *errbuf)
-返回的是第一个适用于网络包抓取的接口名称。1void pcap_close(pcap_t *p)
-用于释放操作结束的监听接口，并且释放相关资源。1pcap_t *pcap_open_live(char *device, int snaplen, int promisc, int to_ms, char *ebuf)
-获得用于捕获网络数据包的数据包捕获描述字。device参数为指定打开的网络设备名。snaplen参数定义捕获数据的最大字节...
-          
-
-        
-          <p class="article-more-link">
-            <a href="/2016/06/30/Libpcap/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/Project/">Project</a>
-
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NETWORK/">NETWORK</a></li></ul>
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
 
 
   <nav id="page-nav">
@@ -792,8 +821,32 @@ Phase3:响应头阶段，这个阶段发生在响应头被发送到客户端之�
               <div class="widget-entry-summary" style="margin: 0;">
             
 
-              <h6 style="margin: 0;"><a href="/2016/12/27/AndroidLesson2/">Android入门介绍</a></h6>
-              <span>December 27, 2016</span>
+              <h6 style="margin: 0;"><a href="/2016/12/29/AndroidLesson4/">四大组件之--活动</a></h6>
+              <span>December 29, 2016</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2016/12/28/AndroidLesson3/">利用碎片创建动态UI</a></h6>
+              <span>December 28, 2016</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2016/12/28/AndroidLesson2/">Android的多设备支持</a></h6>
+              <span>December 28, 2016</span>
             </div>
 
           </li>
@@ -834,30 +887,6 @@ Phase3:响应头阶段，这个阶段发生在响应头被发送到客户端之�
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2016/12/14/DivideandConquer/">分治算法</a></h6>
-              <span>December 14, 2016</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2016/12/14/DynamicPrograming/">动态规划算法</a></h6>
-              <span>December 14, 2016</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -867,7 +896,7 @@ Phase3:响应头阶段，这个阶段发生在响应头被发送到客户端之�
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Common/">Common</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Easy/">LeetCode_Easy</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Medium/">LeetCode_Medium</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Project/">Project</a><span class="category-list-count">4</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Common/">Common</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Easy/">LeetCode_Easy</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Medium/">LeetCode_Medium</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Project/">Project</a><span class="category-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -877,7 +906,7 @@ Phase3:响应头阶段，这个阶段发生在响应头被发送到客户端之�
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ALGORITHM/">ALGORITHM</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ANDROID/">ANDROID</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APACHE/">APACHE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BRIDGE/">BRIDGE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DIVIDE-CONQUER/">DIVIDE&CONQUER</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DP/">DP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GREEDY/">GREEDY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHMAP/">HASHMAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHSET/">HASHSET</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NETWORK/">NETWORK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TEST/">TEST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WAF/">WAF</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ALGORITHM/">ALGORITHM</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ANDROID/">ANDROID</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APACHE/">APACHE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BRIDGE/">BRIDGE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DIVIDE-CONQUER/">DIVIDE&CONQUER</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DP/">DP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GREEDY/">GREEDY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHMAP/">HASHMAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHSET/">HASHSET</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NETWORK/">NETWORK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TEST/">TEST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WAF/">WAF</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -887,7 +916,7 @@ Phase3:响应头阶段，这个阶段发生在响应头被发送到客户端之�
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ALGORITHM/" style="font-size: 16.67px;">ALGORITHM</a> <a href="/tags/ANDROID/" style="font-size: 16.67px;">ANDROID</a> <a href="/tags/APACHE/" style="font-size: 13.33px;">APACHE</a> <a href="/tags/BRIDGE/" style="font-size: 10px;">BRIDGE</a> <a href="/tags/DIVIDE-CONQUER/" style="font-size: 10px;">DIVIDE&CONQUER</a> <a href="/tags/DP/" style="font-size: 10px;">DP</a> <a href="/tags/GREEDY/" style="font-size: 10px;">GREEDY</a> <a href="/tags/HASHMAP/" style="font-size: 10px;">HASHMAP</a> <a href="/tags/HASHSET/" style="font-size: 13.33px;">HASHSET</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/LINUX/" style="font-size: 13.33px;">LINUX</a> <a href="/tags/NETWORK/" style="font-size: 10px;">NETWORK</a> <a href="/tags/TEST/" style="font-size: 10px;">TEST</a> <a href="/tags/WAF/" style="font-size: 13.33px;">WAF</a>
+      <a href="/tags/ALGORITHM/" style="font-size: 15px;">ALGORITHM</a> <a href="/tags/ANDROID/" style="font-size: 17.5px;">ANDROID</a> <a href="/tags/APACHE/" style="font-size: 12.5px;">APACHE</a> <a href="/tags/BRIDGE/" style="font-size: 10px;">BRIDGE</a> <a href="/tags/DIVIDE-CONQUER/" style="font-size: 10px;">DIVIDE&CONQUER</a> <a href="/tags/DP/" style="font-size: 10px;">DP</a> <a href="/tags/GREEDY/" style="font-size: 10px;">GREEDY</a> <a href="/tags/HASHMAP/" style="font-size: 10px;">HASHMAP</a> <a href="/tags/HASHSET/" style="font-size: 12.5px;">HASHSET</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/LINUX/" style="font-size: 12.5px;">LINUX</a> <a href="/tags/NETWORK/" style="font-size: 10px;">NETWORK</a> <a href="/tags/TEST/" style="font-size: 10px;">TEST</a> <a href="/tags/WAF/" style="font-size: 12.5px;">WAF</a>
     </div>
   </div>
 
@@ -897,7 +926,7 @@ Phase3:响应头阶段，这个阶段发生在响应头被发送到客户端之�
     <h3 class="widget-title">Archives</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">26</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">26</span></li></ul>
     </div>
   </div>
 

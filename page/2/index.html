@@ -96,6 +96,129 @@
         
           <section id="main">
   
+    <article id="post-Modsecurity"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2016/07/07/Modsecurity/">Modsecurity 源代码分析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2016/07/07/Modsecurity/" class="article-date">
+	  <time datetime="2016-07-07T09:04:46.000Z" itemprop="datePublished">July 7, 2016</time>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+
+          
+            <div class="entry-summary" style="margin-left:0;">
+            ModSecurity处理事件的5个阶段Phase1:请求头阶段，处于这个阶段的Modsecurity规则，会在Apache完成请求头后，立即被执行。到这个时候还没有读取到请求体，意即并不是所有的请求的参数都可以被使用。
+Phase2:请求体阶段，这个阶段属于输入分析阶段，大部分的应用规则也不会部署于这个阶段。这个阶段可以接收到来自于正常请求的一些参数。在请求体阶段，Modsecurity支持三种编码方式，具体编码方式如下：
+
+Application/x-www-form-urlencode
+Multipart/from-data
+Text/xml
+Phase3:响应头阶段，这个阶段发生在响应头被发送到客户端之前。在这个阶段，一些响应的状态码（如404）在请求的早起就被Apache服务...
+          
+
+        
+          <p class="article-more-link">
+            <a href="/2016/07/07/Modsecurity/#more">Continue Reading →</a>
+          </p>
+        </div>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/Project/">Project</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/APACHE/">APACHE</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-Libpcap"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2016/06/30/Libpcap/">Libpcap的使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2016/06/30/Libpcap/" class="article-date">
+	  <time datetime="2016-06-30T01:10:41.000Z" itemprop="datePublished">June 30, 2016</time>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+
+          
+            <div class="entry-summary" style="margin-left:0;">
+            Libpcap是一个提供了网络抓包高级接口的一个开源库，主要的目的就是创建了平台独立的API。抓包的整个过程图如下所示：
+
+利用libpcap开发的一般步骤如下：
+
+1.监听接口操作1char *pcap_lookupdev(char *errbuf)
+返回的是第一个适用于网络包抓取的接口名称。1void pcap_close(pcap_t *p)
+用于释放操作结束的监听接口，并且释放相关资源。1pcap_t *pcap_open_live(char *device, int snaplen, int promisc, int to_ms, char *ebuf)
+获得用于捕获网络数据包的数据包捕获描述字。device参数为指定打开的网络设备名。snaplen参数定义捕获数据的最大字节...
+          
+
+        
+          <p class="article-more-link">
+            <a href="/2016/06/30/Libpcap/#more">Continue Reading →</a>
+          </p>
+        </div>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/Project/">Project</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NETWORK/">NETWORK</a></li></ul>
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-wafbridge"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -585,125 +708,6 @@ The digits are stored such that the most significant digit is at the head of the
 <!-- Table of Contents -->
 
   
-    <article id="post-LeetCode58"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2016/05/16/LeetCode58/">LeetCode 58 Length of Last Word</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2016/05/16/LeetCode58/" class="article-date">
-	  <time datetime="2016-05-16T01:03:31.000Z" itemprop="datePublished">May 16, 2016</time>
-	</a>
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-            <div class="entry-summary" style="margin-left:0;">
-            题目描述Given a string s consists of upper/lower-case alphabets and empty space characters ‘ ‘, return the length of last word in the string.
-If the last word does not exist, return 0.
-Note: A word is defined as a character sequence consists of non-space characters only.
-For example,Given s = “Hello World”,return 5.
-题目链接
-题目分析将输入字符串按照空格分割，返回最后一部分的长度即...
-          
-
-        
-          <p class="article-more-link">
-            <a href="/2016/05/16/LeetCode58/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>, <a class="article-category-link" href="/categories/LeetCode/LeetCode-Easy/">LeetCode_Easy</a>
-
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-LeetCode38"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2016/05/15/LeetCode38/">LeetCode 38 Count and Say</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2016/05/15/LeetCode38/" class="article-date">
-	  <time datetime="2016-05-15T13:48:46.000Z" itemprop="datePublished">May 15, 2016</time>
-	</a>
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-            <div class="entry-summary" style="margin-left:0;">
-            题目描述The count-and-say sequence is the sequence of integers beginning as follows:1, 11, 21, 1211, 111221, …
-1 is read off as “one 1” or 11.11 is read off as “two 1s” or 21.21 is read off as “one 2, then one 1” or 1211.Given an integer n, generate the nth sequence.
-Note: The sequence of integers will be represented as a string.
-题目链接
-题目分析遍历数字，从左到右发...
-          
-
-        
-          <p class="article-more-link">
-            <a href="/2016/05/15/LeetCode38/#more">Continue Reading →</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>, <a class="article-category-link" href="/categories/LeetCode/LeetCode-Easy/">LeetCode_Easy</a>
-
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA/">JAVA</a></li></ul>
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
 
 
   <nav id="page-nav">
@@ -805,8 +809,32 @@ Note: The sequence of integers will be represented as a string.
               <div class="widget-entry-summary" style="margin: 0;">
             
 
-              <h6 style="margin: 0;"><a href="/2016/12/27/AndroidLesson2/">Android入门介绍</a></h6>
-              <span>December 27, 2016</span>
+              <h6 style="margin: 0;"><a href="/2016/12/29/AndroidLesson4/">四大组件之--活动</a></h6>
+              <span>December 29, 2016</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2016/12/28/AndroidLesson3/">利用碎片创建动态UI</a></h6>
+              <span>December 28, 2016</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2016/12/28/AndroidLesson2/">Android的多设备支持</a></h6>
+              <span>December 28, 2016</span>
             </div>
 
           </li>
@@ -847,30 +875,6 @@ Note: The sequence of integers will be represented as a string.
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2016/12/14/DivideandConquer/">分治算法</a></h6>
-              <span>December 14, 2016</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2016/12/14/DynamicPrograming/">动态规划算法</a></h6>
-              <span>December 14, 2016</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -880,7 +884,7 @@ Note: The sequence of integers will be represented as a string.
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Common/">Common</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Easy/">LeetCode_Easy</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Medium/">LeetCode_Medium</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Project/">Project</a><span class="category-list-count">4</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Android/">Android</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Common/">Common</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/">LeetCode</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Easy/">LeetCode_Easy</a><span class="category-list-count">24</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/LeetCode/LeetCode-Medium/">LeetCode_Medium</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Project/">Project</a><span class="category-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -890,7 +894,7 @@ Note: The sequence of integers will be represented as a string.
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ALGORITHM/">ALGORITHM</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ANDROID/">ANDROID</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APACHE/">APACHE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BRIDGE/">BRIDGE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DIVIDE-CONQUER/">DIVIDE&CONQUER</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DP/">DP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GREEDY/">GREEDY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHMAP/">HASHMAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHSET/">HASHSET</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NETWORK/">NETWORK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TEST/">TEST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WAF/">WAF</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ALGORITHM/">ALGORITHM</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ANDROID/">ANDROID</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APACHE/">APACHE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BRIDGE/">BRIDGE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DIVIDE-CONQUER/">DIVIDE&CONQUER</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DP/">DP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GREEDY/">GREEDY</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHMAP/">HASHMAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HASHSET/">HASHSET</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA/">JAVA</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NETWORK/">NETWORK</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TEST/">TEST</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WAF/">WAF</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -900,7 +904,7 @@ Note: The sequence of integers will be represented as a string.
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ALGORITHM/" style="font-size: 16.67px;">ALGORITHM</a> <a href="/tags/ANDROID/" style="font-size: 16.67px;">ANDROID</a> <a href="/tags/APACHE/" style="font-size: 13.33px;">APACHE</a> <a href="/tags/BRIDGE/" style="font-size: 10px;">BRIDGE</a> <a href="/tags/DIVIDE-CONQUER/" style="font-size: 10px;">DIVIDE&CONQUER</a> <a href="/tags/DP/" style="font-size: 10px;">DP</a> <a href="/tags/GREEDY/" style="font-size: 10px;">GREEDY</a> <a href="/tags/HASHMAP/" style="font-size: 10px;">HASHMAP</a> <a href="/tags/HASHSET/" style="font-size: 13.33px;">HASHSET</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/LINUX/" style="font-size: 13.33px;">LINUX</a> <a href="/tags/NETWORK/" style="font-size: 10px;">NETWORK</a> <a href="/tags/TEST/" style="font-size: 10px;">TEST</a> <a href="/tags/WAF/" style="font-size: 13.33px;">WAF</a>
+      <a href="/tags/ALGORITHM/" style="font-size: 15px;">ALGORITHM</a> <a href="/tags/ANDROID/" style="font-size: 17.5px;">ANDROID</a> <a href="/tags/APACHE/" style="font-size: 12.5px;">APACHE</a> <a href="/tags/BRIDGE/" style="font-size: 10px;">BRIDGE</a> <a href="/tags/DIVIDE-CONQUER/" style="font-size: 10px;">DIVIDE&CONQUER</a> <a href="/tags/DP/" style="font-size: 10px;">DP</a> <a href="/tags/GREEDY/" style="font-size: 10px;">GREEDY</a> <a href="/tags/HASHMAP/" style="font-size: 10px;">HASHMAP</a> <a href="/tags/HASHSET/" style="font-size: 12.5px;">HASHSET</a> <a href="/tags/JAVA/" style="font-size: 20px;">JAVA</a> <a href="/tags/LINUX/" style="font-size: 12.5px;">LINUX</a> <a href="/tags/NETWORK/" style="font-size: 10px;">NETWORK</a> <a href="/tags/TEST/" style="font-size: 10px;">TEST</a> <a href="/tags/WAF/" style="font-size: 12.5px;">WAF</a>
     </div>
   </div>
 
@@ -910,7 +914,7 @@ Note: The sequence of integers will be represented as a string.
     <h3 class="widget-title">Archives</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">26</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">26</span></li></ul>
     </div>
   </div>
 
